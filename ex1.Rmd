@@ -1,0 +1,106 @@
+---
+title: "ex1"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+### (1)
+
+Using the Frisch-Waugh-Lovell result, we have
+
+
+\begin{align*}
+RSS &= \boldsymbol{e}'\boldsymbol{e} \\
+&= (\boldsymbol{R}_1(\boldsymbol{y}-\boldsymbol{X}_2\boldsymbol{b}_2))'\boldsymbol{R}_1(\boldsymbol{y}-\boldsymbol{X}_2\boldsymbol{b}_2) \\
+&= (\boldsymbol{y}-\boldsymbol{X}_2\boldsymbol{b}_2)'\boldsymbol{R}_1(\boldsymbol{y}-\boldsymbol{X}_2\boldsymbol{b}_2) \\
+&= \boldsymbol{y}'\boldsymbol{R}_1\boldsymbol{y}-2\boldsymbol{b}_2'\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{y}+\boldsymbol{b}_2'\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{X}_2\boldsymbol{b}_2 \\
+&= \boldsymbol{y}'\boldsymbol{R}_1\boldsymbol{y}-\boldsymbol{b}_2'(2\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{y}-\boldsymbol{X}_2'\boldsymbol{R}_1'\boldsymbol{X}_2\boldsymbol{b}_2) \\
+&= \boldsymbol{y}'\boldsymbol{R}_1\boldsymbol{y}-\boldsymbol{y}'\boldsymbol{R}_1\boldsymbol{X}_2(\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{X}_2)^{-1}(2\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{y}-\boldsymbol{X}_2'\boldsymbol{R}_1'\boldsymbol{X}_2\boldsymbol{b}_2) \\
+&= \boldsymbol{y}'\boldsymbol{R}_1\boldsymbol{y}-\boldsymbol{y}'\boldsymbol{R}_1\boldsymbol{X}_2(\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{X}_2)^{-1}(\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{y}+\boldsymbol{X}_2'(\boldsymbol{e}+\boldsymbol{R}_1\boldsymbol{X}_2\boldsymbol{b}_2)-\boldsymbol{X}_2'\boldsymbol{R}_1'\boldsymbol{X}_2\boldsymbol{b}_2) \\
+&= \boldsymbol{y}'\boldsymbol{R}_1\boldsymbol{y}-\boldsymbol{y}'\boldsymbol{R}_1\boldsymbol{X}_2(\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{X}_2)^{-1}(\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{y}+\boldsymbol{X}_2'\boldsymbol{e}) \\
+&= \boldsymbol{y}'\boldsymbol{R}_1\boldsymbol{y}-\boldsymbol{y}'\boldsymbol{R}_1\boldsymbol{X}_2(\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{y}.
+\end{align*}
+
+Let $\boldsymbol{y}_R = \boldsymbol{R}_1\boldsymbol{y}$ and $\boldsymbol{X}_R = \boldsymbol{R}_1\boldsymbol{X}_2$. Given $\boldsymbol{R}_1'=\boldsymbol{R}_1=\boldsymbol{R}_1'\boldsymbol{R}_1=\boldsymbol{R}_1\boldsymbol{R}_1'$. Then, the RSS can be expressed as 
+\begin{align*}
+RSS &= \boldsymbol{y}'\boldsymbol{R}_1'\boldsymbol{R}_1\boldsymbol{y}-\boldsymbol{y}'\boldsymbol{R}_1'\boldsymbol{R}_1\boldsymbol{X}_2(\boldsymbol{X}_2'\boldsymbol{R}_1'\boldsymbol{R}_1\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{R}_1'\boldsymbol{R}_1\boldsymbol{y} \\
+&= \boldsymbol{y}_R'\boldsymbol{y}_R-\boldsymbol{y}_R'\boldsymbol{X}_R(\boldsymbol{X}_R'\boldsymbol{X}_R)^{-1}\boldsymbol{X}_R'\boldsymbol{y}_R \\
+&= \boldsymbol{y}_R'\boldsymbol{y}_R-\hat{\boldsymbol{y}}_R'\hat{\boldsymbol{y}}_R \\
+&= TSS_R - ESS_R.
+\end{align*}
+
+### (2)
+
+Let $$\bar{R}^2 = 1-\left(\frac{RSS/(N-K)}{TSS/(N-1)}\right).$$
+We then have
+\begin{align*}
+1-\bar{R}^2 &= 1-1+\left(\frac{RSS/(N-K)}{TSS/(N-1)}\right)\\
+1-\bar{R}^2 &= \left(\frac{(N-1)RSS}{(N-K)TSS}\right)\\
+1-\bar{R}^2 &= \frac{N-1}{N-K}(1-R^2).
+\end{align*}
+
+Since $(1-R^2)\geq0$ and $(N-1)/(N-K)>0$ for $N>K\geq1$, $1-\bar{R}^2\geq0$. Hence, $\bar{R}^2\leq1$. Because $(1-R^2) \leq1$ and $(N-1)/(N-K)\leq1$ for $N>K\geq1$, so $1-\bar{R}^2\leq1$, and $\bar{R}\geq0$.
+
+### (3)
+
+It is not a monotonic function of the number of regressors.
+
+Penalize the number of regressors.
+
+## 2.
+
+$$\boldsymbol{I}-\boldsymbol{D}(\boldsymbol{D}'\boldsymbol{D})^{-1}\boldsymbol{D}' = \boldsymbol{I}-\boldsymbol{D}\boldsymbol{D}'.$$ $\boldsymbol{D}\boldsymbol{D}'$ is a matrix with a one on the $i$th row $i$th column, and is zero everywhere else. Hence, $\boldsymbol{I} - \boldsymbol{D}\boldsymbol{D}'$ equals a matrix with ones on the leading diagnoal, apart from the $i$th location which is zero, and is zero everywhere else.
+
+Using the Frisch-Waugh-Lovell result, we have $$\boldsymbol{b} = (\boldsymbol{X}'\boldsymbol{R}_d\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{R}_d\boldsymbol{y},$$ where $\boldsymbol{R}_d=\boldsymbol{I}_T-\boldsymbol{D}(\boldsymbol{D}'\boldsymbol{D})^{-1}\boldsymbol{D}'$.
+
+Given $\boldsymbol{R}_d=\boldsymbol{R}_d'=\boldsymbol{R}_d'\boldsymbol{R}_d=\boldsymbol{R}_d\boldsymbol{R}_d'$. The regression coefficients $\boldsymbol{b}$ can be expressed as $$\boldsymbol{b} = (\boldsymbol{X}'\boldsymbol{R}_d'\boldsymbol{R}_d\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{R}_d'\boldsymbol{R}_d\boldsymbol{y}=\left(\boldsymbol{X}_{(i)}'\boldsymbol{X}_{(i)}\right)^{-1}\boldsymbol{X}_{(i)}'\boldsymbol{y}_{(i)}.$$
+
+We can interpret $\boldsymbol{b}$ as the regression coefficients with the $i$th data value removed.  
+
+\begin{align*}
+\boldsymbol{D}'\boldsymbol{y} &= \boldsymbol{D}'\boldsymbol{X}\boldsymbol{b} + \boldsymbol{D}'\boldsymbol{D}d+\boldsymbol{D}'\boldsymbol{e}\\
+y_i &= \boldsymbol{x}_i'\boldsymbol{b} + d+ \boldsymbol{D}'\boldsymbol{R}_d(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{b})\\
+y_i &= \boldsymbol{x}_i'\boldsymbol{b} + d+ \boldsymbol{D}'(\boldsymbol{I} - \boldsymbol{D}\boldsymbol{D}')(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{b})\\
+y_i &= \boldsymbol{x}_i'\boldsymbol{b} + d+ \boldsymbol{0}(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{b})\\
+d &= y_i - \boldsymbol{x}_i'\boldsymbol{b} 
+\end{align*}
+
+## 3.
+
+Using the Frisch-Waugh-Lovell result, we have $$d = (\boldsymbol{D}'\boldsymbol{R}_b\boldsymbol{D})^{-1}\boldsymbol{D}'\boldsymbol{R}_b\boldsymbol{y},$$ where $\boldsymbol{R}_b=\boldsymbol{I}_T-\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'$.
+
+It can then be expressed as 
+\begin{align*}
+d &= (\boldsymbol{D}'(\boldsymbol{I}_T-\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}')\boldsymbol{D})^{-1}\boldsymbol{D}'(\boldsymbol{y}-\boldsymbol{X}'\tilde{\boldsymbol{b}})\\
+&=(\boldsymbol{D}'\boldsymbol{D}-\boldsymbol{D}'\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{D})^{-1}(y_i-\boldsymbol{x}_i'\tilde{\boldsymbol{b}})\\
+&=(1-\boldsymbol{D}'\boldsymbol{H}\boldsymbol{D})^{-1}(y_i-\boldsymbol{x}_i'\tilde{\boldsymbol{b}})\\
+&=(1-h_i)^{-1}(y_i-\boldsymbol{x}_i'\tilde{\boldsymbol{b}}),
+\end{align*}
+where $\tilde{\boldsymbol{b}}=(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{y}$, $\boldsymbol{H}$ is the hat matrix and $h_i$ is the $i$th diagonal value of $\boldsymbol{H}$.
+
+$d$ is the prediction error that would be obtained if the $i$th observation was omitted.
+
+## 4.
+
+### (1)
+
+\begin{align*}
+E[\tilde{\beta}]&=E\left[\frac{\beta^2\sum yx}{\sigma^2+\beta^2 \sum x^2}\right]\\
+&=E\left[\frac{\sum yx}{\sigma^2/\beta^2+ \sum x^2}\right]\\
+&=E\left[\frac{\sum (\beta x + \varepsilon)x}{\sigma^2/\beta^2+ \sum x^2}\right]\\
+&=E\left[\frac{\sum \beta x^2}{\sigma^2/\beta^2+ \sum x^2}\right] + E\left[\frac{\sum \varepsilon x}{\sigma^2/\beta^2+ \sum x^2}\right]\\
+&=\beta \frac{\sum x^2}{\sigma^2/\beta^2 + \sum x^2}\\
+&=\beta/(1+c),
+\end{align*}
+where $c = \sigma^2/(\beta^2\sum x^2)$.
+
+$$B[\tilde{\beta}] = -\{c/(1+c)\}\beta.$$

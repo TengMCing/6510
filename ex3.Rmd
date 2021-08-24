@@ -1,0 +1,211 @@
+---
+title: "ex3"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1
+
+## (1)
+
+\begin{align*}
+E[\hat{\beta}_2|\boldsymbol{X}] &= E[(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{r}|\boldsymbol{X}] \\
+&= E[(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'(\boldsymbol{I}-\boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1')\boldsymbol{y}|\boldsymbol{X}] \\
+&= E[(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{y}-(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'\boldsymbol{y}|\boldsymbol{X}] \\
+&= E[(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{y}|\boldsymbol{X}]-E[(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'\boldsymbol{y}|\boldsymbol{X}] \\
+&= E[(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'(\boldsymbol{X}_2\beta_2 + \boldsymbol{X}_1\beta_1 + \varepsilon)|\boldsymbol{X}]-E[(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'\boldsymbol{y}|\boldsymbol{X}] \\
+&= \beta_2 + (\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1\beta_1-E[(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'\boldsymbol{y}|\boldsymbol{X}] \\
+&= \beta_2 + (\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1\beta_1-E[(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'(\boldsymbol{X}_1\beta_1 + \boldsymbol{X}_2\beta_2 + \varepsilon)|\boldsymbol{X}] \\
+&= \beta_2 + (\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1\beta_1-E[(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'(\boldsymbol{X}_1\beta_1 + \boldsymbol{X}_2\beta_2 + \varepsilon)|\boldsymbol{X}] \\
+&= \beta_2 + (\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1\beta_1-(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1\beta_1 - (\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'\boldsymbol{X}_2\beta_2 \\
+&= \beta_2  - (\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'\boldsymbol{X}_2\beta_2.
+\end{align*}
+
+$$bias~of~\hat{\beta}_2=-(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'\boldsymbol{X}_2\beta_2.$$ 
+
+## (2)
+
+The OLS solution is $\boldsymbol{b}_2 = (\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{y}$, where $\boldsymbol{R}_1 = \boldsymbol{I} - \boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'$.
+
+# Question 2
+
+## (1)
+
+$$\boldsymbol{y} = \boldsymbol{X}_1\beta_1+\boldsymbol{X}_2\beta_2+\varepsilon=\boldsymbol{X}_2\boldsymbol{B}\beta_1+\boldsymbol{X}_2\beta_2+\varepsilon=\boldsymbol{X}_2(\boldsymbol{B}\beta_1+\beta_2) + \varepsilon.$$
+
+Hence, $\gamma = \boldsymbol{B}\beta_1 + \beta_2$ can be estimated by regessing $\boldsymbol{y}$ on $\boldsymbol{X}_2$.
+
+## (2)
+
+The RSS of regressing $\boldsymbol{y}$ on $\boldsymbol{X}_2$ is
+
+\begin{align*}
+\boldsymbol{e}_2'\boldsymbol{e}_2&=(\boldsymbol{y}-\boldsymbol{X}_2(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{y})'(\boldsymbol{y}-\boldsymbol{X}_2(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{y})\\
+&=\boldsymbol{y}'\boldsymbol{y} - \boldsymbol{b}_2'\boldsymbol{X}_2'\boldsymbol{X}_2\boldsymbol{b}_2,
+\end{align*}
+
+where $\boldsymbol{b}_2 = (\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{y}$.
+
+
+The RSS of regressing $\boldsymbol{y}$ on $\boldsymbol{X}_1$ is
+
+\begin{align*}
+\boldsymbol{e}_1'\boldsymbol{e}_1&=(\boldsymbol{y}-\boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'\boldsymbol{y})'(\boldsymbol{y}-\boldsymbol{X}_1(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'\boldsymbol{y})\\
+&=\boldsymbol{y}'\boldsymbol{y} - \boldsymbol{b}_1'\boldsymbol{X}_1'\boldsymbol{X}_1\boldsymbol{b}_1,
+\end{align*}
+
+where $\boldsymbol{b}_1 = (\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'\boldsymbol{y}$.
+
+If $\boldsymbol{B}^{-1}$ exists, then
+
+$$\boldsymbol{b}_2 = (\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2'\boldsymbol{y} = \boldsymbol{B}(\boldsymbol{B}'\boldsymbol{X}_2'\boldsymbol{X}_2\boldsymbol{B})^{-1}\boldsymbol{B}'\boldsymbol{X}_2'\boldsymbol{y} = \boldsymbol{B}(\boldsymbol{X}_1'\boldsymbol{X}_1)^{-1}\boldsymbol{X}_1'\boldsymbol{y} = \boldsymbol{B}\boldsymbol{b}_1.$$
+
+Hence,
+
+$$\boldsymbol{b}_2'\boldsymbol{X}_2'\boldsymbol{X}_2\boldsymbol{b}_2 = \boldsymbol{b}_1'\boldsymbol{B}'\boldsymbol{X}_2'\boldsymbol{X}_2\boldsymbol{B}\boldsymbol{b}_1 = \boldsymbol{b}_1'\boldsymbol{X}_1'\boldsymbol{X}_1\boldsymbol{b}_1.$$
+
+And the $R^2$ will be identical.
+
+# Question 3
+
+## (1)
+
+\begin{align*}
+\boldsymbol{A}\boldsymbol{L}\boldsymbol{A}\boldsymbol{L} &= (\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}\boldsymbol{L}\\
+&= (\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}\boldsymbol{L}\\
+&= \boldsymbol{A}\boldsymbol{L}
+\end{align*}
+
+
+\begin{align*}
+\boldsymbol{A}\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'\boldsymbol{A}' &= \boldsymbol{A}\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-T}\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\\
+&= \boldsymbol{A}\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}
+\end{align*}
+
+If $\boldsymbol{A}$ is symmetric, then
+
+$$(\boldsymbol{L}\boldsymbol{A})' = \boldsymbol{A}'\boldsymbol{L}'=\boldsymbol{A}\boldsymbol{L}'=\boldsymbol{I}.$$
+However, 
+
+$\boldsymbol{A}\boldsymbol{L}'=(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}\boldsymbol{L}'$ and
+
+$(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}\boldsymbol{L}'$ is not well-defined.
+
+Hence, $\boldsymbol{A}$ is not symmetric.
+
+$$\boldsymbol{L}'\boldsymbol{A}'=\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}$$
+
+$\boldsymbol{AL}$ is not symmetric.
+
+## (2)
+
+Since $E[\boldsymbol{X}'\varepsilon|\boldsymbol{X}] = 0$,
+
+$$E[\boldsymbol{b}^*|\boldsymbol{X},\boldsymbol{L},\boldsymbol{r}] = E[\boldsymbol{b}+\boldsymbol{A}(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b})|\boldsymbol{X},\boldsymbol{L},\boldsymbol{r}]=\boldsymbol{\beta}+\boldsymbol{A}(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{\beta}).$$
+
+Suppose $\boldsymbol{r}-\boldsymbol{L}\boldsymbol{\beta} \neq \boldsymbol{0}$. Then, $bias~of~\boldsymbol{b}^* = \boldsymbol{A}(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{\beta}) \neq \boldsymbol{0}$.
+
+## (3)
+
+$$var[\boldsymbol{b}^*|\boldsymbol{X}] = var[\boldsymbol{b}+\boldsymbol{Ar}-\boldsymbol{ALb}|\boldsymbol{X}]=var[\boldsymbol{b}-\boldsymbol{ALb}|\boldsymbol{X}]=var[(\boldsymbol{I}-\boldsymbol{AL})\boldsymbol{b}|\boldsymbol{X}]=(\boldsymbol{I}-\boldsymbol{AL})var[\boldsymbol{b}|\boldsymbol{X}](\boldsymbol{I}-\boldsymbol{AL})'$$
+
+$$(\boldsymbol{I}-\boldsymbol{AL})var[\boldsymbol{b}|\boldsymbol{X}](\boldsymbol{I}-\boldsymbol{AL})' = (\boldsymbol{I}-\boldsymbol{AL})\sigma^2_\varepsilon(\boldsymbol{X}'\boldsymbol{X})^{-1}(\boldsymbol{I}-\boldsymbol{AL})'=\sigma^2_\varepsilon(\boldsymbol{X}'\boldsymbol{X})^{-1}-\sigma^2_\varepsilon\boldsymbol{A}\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'\boldsymbol{A}'.$$
+
+# Question 4
+
+## (1)
+
+### set 1
+
+```{r}
+L = matrix(c(0,1,1,1), nrow = 1)
+r = matrix(1)
+
+L
+```
+
+```{r}
+r
+```
+
+### set 2
+
+```{r}
+L = matrix(c(0,-1,3,0,
+             1,0,0,-1),
+           nrow = 2, byrow = TRUE)
+r = matrix(c(0,0), ncol = 1)
+
+L
+```
+
+```{r}
+r
+```
+
+### set 3
+
+```{r}
+L = matrix(c(0,1,-1,0,
+             0,0,0,1,
+             1,-3,0,0),
+           nrow = 3, byrow = TRUE)
+r = matrix(c(2,6,0), ncol = 1)
+
+L
+```
+
+```{r}
+r
+```
+
+## (2)
+
+### set 1
+
+$$Y_i=\beta_1  + \beta_2 X_{i,2}+\beta_3 X_{i,3}+\beta_4 X_{i,4}$$
+
+$$Y_i=\beta_1  + \beta_2 X_{i,2}+\beta_3 X_{i,3}+(1-\beta_2-\beta_3) X_{i,4}$$
+
+$$Y_i-X_{i,4}=\beta_1  + \beta_2 (X_{i,2}-X_{i,4})+\beta_3 (X_{i,3}-X_{i,4})$$
+
+### set 2
+
+$$Y_i=\beta_1  + \beta_2 X_{i,2}+\beta_3 X_{i,3}+\beta_4 X_{i,4}$$
+
+$$Y_i=\beta_1  + 3\beta_3 X_{i,2}+\beta_3 X_{i,3}+\beta_1 X_{i,4}$$
+
+$$Y_i=\beta_1 (1+X_{i,4})  + \beta_3 3X_{i,2}+\beta_3 X_{i,3}$$
+
+### set 3
+
+$$Y_i=\beta_1  + \beta_2 X_{i,2}+\beta_3 X_{i,3}+\beta_4 X_{i,4}$$
+
+$$Y_i=3\beta_2  + \beta_2 X_{i,2}+(\beta_2-2) X_{i,3}+6 X_{i,4}$$
+$$Y_i+2 X_{i,3}-6 X_{i,4}=\beta_2 (3+X_{i,2}+X_{i,3})$$
+
+
+
+
+# Question 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,129 @@
+---
+title: "ex2"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+---
+
+# Question 1
+
+## (1)
+
+$$(\boldsymbol{X}'\boldsymbol{X})^{-1} = $$
+```{r}
+matrix(c(16,0,0,
+         0,16,-14.4,
+         0,-14.4,16),
+       ncol = 3) |> 
+  solve()
+```
+
+The variance of $b_1$ is 
+
+$$var(b_1|\boldsymbol{X}) = (\boldsymbol{X}'\boldsymbol{X})^{-1}_{11}\sigma^2_\varepsilon= 32/16 = 2.$$
+
+$(\boldsymbol{X}'\boldsymbol{X})$ is the var-cov matrix of $\boldsymbol{X}$. The variance of $b_1$ is directly proportional to the reciprocal of the observed variance of $X_1$.
+
+## (2)
+
+The variance of $b_2$ is 
+
+$$var(b_2|\boldsymbol{X}) = (\boldsymbol{X}'\boldsymbol{X})^{-1}_{22}\sigma^2_\varepsilon= 32 \times 0.3289474 = 10.52632.$$
+
+The variance of $b_3$ is 
+
+$$var(b_3|\boldsymbol{X}) = (\boldsymbol{X}'\boldsymbol{X})^{-1}_{33}\sigma^2_\varepsilon= 32 \times 0.3289474 = 10.52632.$$
+
+It is because the cov between $X_2$ and $X_3$ is not zero. By FWL, we know it needs to take out the effect of other variables first. $\boldsymbol{R}_1X_2$ is orthogonal to $X_3$, but it is shorter than $X_2$.
+
+## (3)
+
+The cov between $b_2$ and $b_3$ is 0.2960526, which is positive. 
+
+# Question 2
+
+## (1)
+
+$$\boldsymbol{d} = ((\boldsymbol{XT})'(\boldsymbol{XT}))^{-1}(\boldsymbol{XT})'\boldsymbol{y}=\boldsymbol{T}^{-1}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{T}^{-T}\boldsymbol{T}'\boldsymbol{X}'\boldsymbol{y}=\boldsymbol{T}^{-1}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{y}$$
+
+$$\boldsymbol{Td}=\boldsymbol{b}$$
+
+$$\boldsymbol{r} = (\boldsymbol{I}-\boldsymbol{XT}((\boldsymbol{XT})'\boldsymbol{XT})^{-1}(\boldsymbol{XT})')\boldsymbol{y} = (\boldsymbol{I} - \boldsymbol{X}\boldsymbol{T}\boldsymbol{T}^{-1}\boldsymbol{b})\boldsymbol{y}=\boldsymbol{e}$$
+
+
+
+## (2)
+
+For a simple linear regression $y_i=\alpha + \beta x_i + \varepsilon_i$:
+
+$$\hat{\beta} = \frac{\sum (x_t-\bar{x})(y_y-\bar{y})}{\sum (x_t-\bar{x})^2}$$
+
+$$\hat{\alpha} = \bar{y}-(\hat{\beta}\bar{x})$$
+
+By page 12
+
+$$d = \frac{\sum (y_t-\bar{y})(\hat{y}_t-\bar{y})}{\sum (\hat{y}_t-\bar{y})^2} = 1.$$
+
+Then $$c = \bar{y} - (1-\bar{y}) = 0.$$
+
+Since $r = y - \hat{y}$, RSS will be the same and $R^2$ will be the same.
+
+## (3)
+
+By FWL,
+
+$$\boldsymbol{g} = (\boldsymbol{W}'\boldsymbol{R}_X\boldsymbol{W})^{-1}\boldsymbol{W}'\boldsymbol{R}_X\boldsymbol{y},$$ where $\boldsymbol{R}_X=(\boldsymbol{I} - \boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X'})$.
+
+Meanwhile,
+
+$$\boldsymbol{e} = \boldsymbol{R}_X\boldsymbol{y}.$$
+
+If we regress $\boldsymbol{e}$ on $\boldsymbol{X}$ and $\boldsymbol{W}$,
+
+$$\tilde{\boldsymbol{g}} = (\boldsymbol{W}'\boldsymbol{R}_X\boldsymbol{W})^{-1}\boldsymbol{W}'\boldsymbol{R}_X\boldsymbol{e} = (\boldsymbol{W}'\boldsymbol{R}_X\boldsymbol{W})^{-1}\boldsymbol{W}'\boldsymbol{R}_X\boldsymbol{R}_X\boldsymbol{y}=(\boldsymbol{W}'\boldsymbol{R}_X\boldsymbol{W})^{-1}\boldsymbol{W}'\boldsymbol{R}_X\boldsymbol{e} = (\boldsymbol{W}'\boldsymbol{R}_X\boldsymbol{W})^{-1}\boldsymbol{W}'\boldsymbol{R}_X\boldsymbol{y}=\boldsymbol{g}.$$
+
+The estimated standard error for $\boldsymbol{g}$ is 
+
+$$var[\boldsymbol{g}|\boldsymbol{X},\boldsymbol{W}]=\sigma^2_\varepsilon(\boldsymbol{W}'\boldsymbol{R}_X\boldsymbol{W})^{-1}.$$
+
+The estimated standard error for $\tilde{\boldsymbol{g}}$ is
+
+$$var[\tilde{\boldsymbol{g}}|\boldsymbol{X},\boldsymbol{W}]=\sigma^2_\varepsilon(\boldsymbol{W}'\boldsymbol{R}_X\boldsymbol{W})^{-1}.$$
+
+## (4)
+
+For (1), transform $\boldsymbol{X}$ by a full rank matrix will not change the performance of the result.
+
+For (2), OLS already captured everything it can possibly capture. Run another OLS onto of it without providing new information will not give you extra benefit.
+
+For (3), things that can be explained by $\boldsymbol{W}$ and cant' be explained by $\boldsymbol{X}$ is in $\boldsymbol{e}$.
+
+# Question 3
+
+Since  $\boldsymbol{R}_1=(\boldsymbol{I} - \boldsymbol{X}_2(\boldsymbol{X}_2'\boldsymbol{X}_2)^{-1}\boldsymbol{X}_2')$, we know
+
+$$\boldsymbol{e} = \boldsymbol{e}_1=\boldsymbol{R}_1\boldsymbol{y}.$$
+\begin{align*}
+E[\boldsymbol{e}'\boldsymbol{e}|\boldsymbol{X}]&=E[\boldsymbol{y}'\boldsymbol{R}_1'\boldsymbol{R}_1\boldsymbol{y}|\boldsymbol{X}]\\
+&=E[\boldsymbol{y}'\boldsymbol{R}_1\boldsymbol{y}|\boldsymbol{X}]\\
+&=E[(\boldsymbol{X}_1\boldsymbol{\beta}_1+\boldsymbol{X}_2\boldsymbol{\beta}_2+\boldsymbol{\varepsilon})'\boldsymbol{R}_1(\boldsymbol{X}_1\boldsymbol{\beta}_1+\boldsymbol{X}_2\boldsymbol{\beta}_2+\boldsymbol{\varepsilon})|\boldsymbol{X}]\\
+&=E[\boldsymbol{\beta}_1'\boldsymbol{X}_1'\boldsymbol{R}_1\boldsymbol{X}_1\boldsymbol{\beta}_1 + \boldsymbol{\beta}_2'\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{X}_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}'\boldsymbol{R}_1\boldsymbol{\varepsilon}|\boldsymbol{X}]\\
+&=E[\boldsymbol{\beta}_2'\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{X}_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}'\boldsymbol{R}_1\boldsymbol{\varepsilon}|\boldsymbol{X}]\\
+&=\boldsymbol{\beta}_2'\boldsymbol{X}_2'\boldsymbol{R}_1\boldsymbol{X}_2\boldsymbol{\beta}_2+(N-k_1)\sigma^2_\varepsilon.
+\end{align*}
+
+
+
+
+
+# Partical question
+
+1. $\beta_3>0$
+
+2. $\beta_1$
+
+3. one percent change in roe, $\beta_2$ percent change in CEO's salary.
+
+4. negative
