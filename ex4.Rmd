@@ -1,0 +1,102 @@
+---
+title: "ex4"
+author: "Weihao Li"
+date: "2021/8/24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1
+
+## (1)
+
+The likelihood for $\theta$ is $$L(\theta:y_1,...y_n) = K(y_1,...,y_n) \times f(y_1,...,y_n:\theta)=K(y_1,...,y_n) \times \prod_{i=1}^{n}\theta y_i^{\theta-1} exp(-y_i^\theta).$$
+
+The support for $\theta$ is $$logL(\theta:y_1,...y_n) = logK(y_1,...,y_n) \times \sum_{i=1}^{n}log(\theta) + (\theta-1)log(y_i) - y_i^\theta.$$
+
+The score function for $\theta$ is $$\boldsymbol{S}(\theta:y_1,...,y_n) = \frac{\partial logL(\theta:y_1,...y_n)}{\partial \theta} = \sum_{i=1}^{n}\frac{1}{\theta} + log(y_i) - y_i^\theta log(y_i).$$
+
+## (2)
+
+The MLE can be obtained by solving the first order condition, 
+
+$$\boldsymbol{S}(\theta:y_1,...,y_n) = \frac{\partial logL(\theta:y_1,...y_n)}{\partial \theta} = \sum_{i=1}^{n}\frac{1}{\theta} + log(y_i) - y_i^\theta log(y_i) = 0.$$
+
+However, there is no closed-form solution.
+
+## (3)
+
+In practical situation, I would use gradient descent to find the maximum.
+
+
+# Question 2
+
+## (1)
+
+The log likelihood function is
+
+\begin{align*}
+logL(\boldsymbol{\theta}:y_1,...y_n) &= logK(y_1,..,y_n) + logf(y1,...,y_n:\boldsymbol{\theta})\\
+&=k+log\left[\prod_{i=1}^{n}\frac{1}{\sqrt{2\pi\sigma^2}}exp\left\{-\frac{(y_i-\mu)^2}{2\sigma^2}\right\}\right]\\
+&=k+\sum_{i=1}^{n}-\frac{1}{2}log(2\pi\sigma^2)-\frac{(y_i-\mu)^2}{2\sigma^2}\\
+&=k-\frac{n}{2}log(2\pi\sigma^2)-\sum_{i=1}^{n}\frac{(y_i-\mu)^2}{2\sigma^2}\\
+&=k-\frac{n}{2}log(\sigma^2)-\sum_{i=1}^{n}\frac{1}{2}\left(\frac{y_i-\mu}{\sigma}\right)^2.
+\end{align*}
+
+## (2)
+
+The Kullback-Liebler divergence is
+
+
+\begin{align*}
+K_n(\boldsymbol{\theta}:\boldsymbol{\theta}_0)&=nK(\boldsymbol{\theta}:\boldsymbol{\theta}_0)\\
+&=nE\left[log\left\{\frac{f(y:\boldsymbol{\theta}_0)}{f(y:\boldsymbol{\theta})}\right\}\right]\\
+&=nE\left[log\{f(y:\boldsymbol{\theta})\}-log\{f(y:\boldsymbol{\theta}_0)\}\right]\\
+&=nE\left[k-\frac{1}{2}log(\sigma_0^2)-\frac{1}{2}\left(\frac{y-\mu_0}{\sigma_0}\right)^2-k+\frac{1}{2}log(\sigma^2)+\frac{1}{2}\left(\frac{y-\mu}{\sigma}\right)^2\right]\\
+&=nE\left[log\left(\frac{\sigma}{\sigma_0}\right)-\frac{1}{2}\left(\frac{y-\mu_0}{\sigma_0}\right)^2+\frac{1}{2}\left(\frac{y-\mu}{\sigma}\right)^2\right]\\
+&=nlog\left(\frac{\sigma}{\sigma_0}\right)-\frac{n}{2} + nE\left[\frac{1}{2}\left(\frac{y-\mu}{\sigma}\right)^2\right]\\
+&=nlog\left(\frac{\sigma}{\sigma_0}\right)-\frac{n}{2} + \frac{n}{2\sigma^2}E\left[y^2+\mu^2-2y\mu\right]\\
+&=nlog\left(\frac{\sigma}{\sigma_0}\right)-\frac{n}{2} + n\frac{\sigma_0^2+\mu_0^2}{2\sigma^2} + n\frac{\mu^2}{2\sigma^2}+n\frac{2\mu_0\mu}{2\sigma^2}\\
+&=nlog\left(\frac{\sigma}{\sigma_0}\right)-\frac{n}{2}\left(1-\frac{\sigma_0^2}{\sigma^2}\right)  + \frac{n}{2}\left(\frac{\mu-\mu_0}{\sigma}\right)^2.\\
+\end{align*}
+
+## (3)
+
+By solving the first order condition of the Kullback-Liebler divergence,
+
+$$\frac{\partial K_n(\boldsymbol{\theta}:\boldsymbol{\theta}_0)}{\partial\mu} = \frac{n\mu-n\mu_0}{\sigma^2}=0.$$
+
+$$\frac{\partial K_n(\boldsymbol{\theta}:\boldsymbol{\theta}_0)}{\partial\sigma} = n\sigma^{-1}-n\sigma^{-3}(\sigma^2_0+n(\mu-\mu_0)) =0$$
+
+We have $\hat{\mu}=\mu_0$ and $\hat{\sigma} = \sigma_0$.
+
+The fisher information per observation is
+
+$$
+\begin{align*}
+\boldsymbol{i}(\boldsymbol{\theta}_0) &= \left. -E\left(\frac{\partial^2 log f(y:\boldsymbol{\theta})}{\partial\boldsymbol{\theta}\partial\boldsymbol{\theta}'}\right) \right|_{\boldsymbol{\theta} = \boldsymbol{\theta}_0} \\
+&=\left. -E\left(\begin{bmatrix}\frac{\partial^2 log f(y:\boldsymbol{\theta})}{\partial\mu^2} & \frac{\partial^2 log f(y:\boldsymbol{\theta})}{\partial\mu\partial\sigma}\\\frac{\partial^2 log f(y:\boldsymbol{\theta})}{\partial\sigma\partial\mu} & \frac{\partial^2 log f(y:\boldsymbol{\theta})}{\partial\sigma^2}\end{bmatrix}\right)\right|_{\boldsymbol{\theta} = \boldsymbol{\theta}_0}\\
+&=\left. -E\left(\begin{bmatrix} -\sigma^{-2} & (2\mu-2y)\sigma^{-3}\\(2\mu-2y)\sigma^{-3} & \sigma^{-2}-3(y-\mu)^2\sigma^{-4}\end{bmatrix}\right)\right|_{\boldsymbol{\theta} = \boldsymbol{\theta}_0}\\
+&=-\begin{bmatrix} -\sigma_0^{-2} & 0 \\ 0 & -2\sigma_0^{-2}\end{bmatrix}\\
+&=\begin{bmatrix} \sigma_0^{-2} & 0 \\ 0 & 2\sigma_0^{-2}\end{bmatrix}.\\
+\end{align*}
+$$
+
+## (4)
+
+Using the invariance property, the MLE of $\boldsymbol{\theta}$ is $$\hat{\boldsymbol{\theta}} = (\sum_{i=1}^{n}y_i/n,\sqrt{\sum_{i=1}^{n}\{y_i-(\sum_{i=1}^{n}y_i/n)\}^2/n})'.$$
+
+The variance of this estimator is 
+
+$$
+\begin{align*}
+var(\hat{\boldsymbol{\theta}}) &=\begin{bmatrix} var(\hat{\mu}) & cov(\hat{\mu}\hat{\sigma})\\ cov(\hat{\sigma}\hat{\mu}) & var(\hat{\sigma}) \end{bmatrix}\\
+&=\begin{bmatrix} \sigma_0^2/n & 0\\ 0 & var(\hat{\sigma}) \end{bmatrix}\\
+\end{align*}
+$$
+
+
+
