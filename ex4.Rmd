@@ -1,8 +1,10 @@
 ---
 title: "ex4"
-author: "Weihao Li"
-date: "2021/8/24"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
@@ -94,9 +96,121 @@ The variance of this estimator is
 $$
 \begin{align*}
 var(\hat{\boldsymbol{\theta}}) &=\begin{bmatrix} var(\hat{\mu}) & cov(\hat{\mu}\hat{\sigma})\\ cov(\hat{\sigma}\hat{\mu}) & var(\hat{\sigma}) \end{bmatrix}\\
-&=\begin{bmatrix} \sigma_0^2/n & 0\\ 0 & var(\hat{\sigma}) \end{bmatrix}\\
+&=\begin{bmatrix} \sigma_0^2/n & 0\\ 0 & \sigma_0^2\left(1-\frac{2}{n}\left\{\frac{\Gamma((n+1)/2)}{\Gamma(n/2)}\right\}^2\right) \end{bmatrix}.\\
 \end{align*}
 $$
+The CRLB is $$(n\boldsymbol{i}(\boldsymbol{\theta}_0))^{-1} = \begin{bmatrix} \sigma_0^2/n & 0\\ 0 & \sigma_0^2/(2n) \end{bmatrix}.$$ This is smaller than the variance of the MLE.
+
+# Question 3
+
+## (1)
+
+The likelihood for $\theta$ in the first case is 
+$$L(\theta:y_1,..y_n) = K(y_1,..y_n) \times f(y_1,..y_n:\theta)=K(y_1,..y_n) \times \prod_{i=1}^{n}\frac{1}{\sqrt{2\pi\theta}}exp\left(-\frac{(y_i-\theta)^2}{2\theta}\right).$$
+The support is 
+$$logL(\theta:y_1,..y_n) = logK(y_1,..y_n) + logf(y_1,..y_n:\theta)=k + \sum_{i=1}^{n}-\frac{1}{2}log(\theta) -\frac{(y_i-\theta)^2}{2\theta}$$
+
+The score function is 
+$$\frac{\partial logL(\theta:y_1,..y_n)}{\partial \theta} = \sum_{i=1}^{n}-\frac{1}{2\theta}+\frac{y_i^2}{2\theta^2}-\frac{1}{2}.$$
+
+
+The likelihood for $\theta$ in the second case is 
+
+$$L(\theta:y_1,..y_n) = K(y_1,..y_n) \times f(y_1,..y_n:\theta)=K(y_1,..y_n) \times \prod_{i=1}^{n}\frac{y_i}{\theta^2}exp(-y_i^2/(2\theta^2)).$$
+The support is 
+$$logL(\theta:y_1,..y_n) = logK(y_1,..y_n) \times logf(y_1,..y_n:\theta)=k + \sum_{i=1}^{n}log(y_i)-2log(\theta) -y_i^2/(2\theta^2).$$
+
+The score function is $$\frac{\partial logL(\theta:y_1,..y_n)}{\partial \theta} =\sum_{i=1}^{n}-\frac{2}{\theta}+\frac{y_i^2}{\theta^3}.$$
+
+## (2)
+
+The expectation of the score function will be equal to zero when evaluated at $\theta_0$. 
+
+For the first case:
+
+$$E[\sum_{i=1}^{n}-\frac{1}{2\theta}+\frac{y_i^2}{2\theta^2}-\frac{1}{2}]|_{\theta=\theta_0}=-\frac{n}{2\theta_0}-\frac{n}{2}+\frac{n(\theta_0^2 + \theta_0)}{2\theta_0^2}=0.$$
+
+
+For the second case:
+
+$$E[\sum_{i=1}^{n}-\frac{2}{\theta}+\frac{y_i^2}{\theta^3}]|_{\theta=\theta_0}=-\frac{n}{2\theta_0}-\frac{n\{(\theta\sqrt{\pi/2})^2 + 2\theta^2(1-\pi/4)\}}{\theta_0^3}=0.$$
+## (3)
+
+For the first case:
+
+$$
+\begin{align*}
+i(\theta) &= -E\left.\left(\frac{\partial logf(y:\theta)}{\partial \theta^2}\right)\right|_{\theta=\theta_0}\\
+&= -E\left.\left(\frac{1}{2\theta^2}-\frac{y^2}{\theta^3}\right)\right|_{\theta=\theta_0}\\
+&= -\frac{1}{2\theta_0^2}+\frac{\theta_0^2+\theta_0}{\theta_0^3}\\
+&= \frac{2\theta_0^2+\theta_0}{2\theta_0^3}.\\
+\end{align*}
+$$
+
+For the second case:
+
+$$
+\begin{align*}
+i(\theta) &= -E\left.\left(\frac{\partial logf(y:\theta)}{\partial \theta^2}\right)\right|_{\theta=\theta_0}\\
+&= -E\left.\left(\frac{2}{\theta^2}-\frac{3y^2}{\theta^4}\right)\right|_{\theta=\theta_0}\\
+&= -\frac{2}{\theta_0^2}+\frac{3\{(\theta_0\sqrt{\pi/2})^2+2\theta_0^2(1-\pi/4)\}}{\theta_0^4}\\
+&= -\frac{2}{\theta_0^2}+\frac{6}{\theta_0^2}\\
+&= \frac{4}{\theta_0^2}.\\
+\end{align*}
+$$
+
+# Question 4
+
+## (1)
+
+The joint pdf of $y$ and $\boldsymbol{x}$ is 
+
+$$f(y,\boldsymbol{x}:\boldsymbol{\beta},\boldsymbol{\theta}) = f(y|\boldsymbol{x}:\boldsymbol{\beta})f(\boldsymbol{x}:\boldsymbol{\theta}).$$
+The conditional log likelihood is 
+
+$$
+\begin{align*}
+logL(\boldsymbol{\beta}:y_1,...,y_n)&=log\prod_{i=1}^{n}f(y_i|\boldsymbol{x}_i:\boldsymbol{\beta})\\
+&=\sum_{i=1}^{n}logf(y_i|\boldsymbol{x}_i:\boldsymbol{\beta})\\
+&=\sum_{i=1}^{n}log\frac{exp(-exp(\boldsymbol{\beta}'\boldsymbol{x}_i))exp(\boldsymbol{\beta}'\boldsymbol{x}_i)^{y_i}}{y_i!}\\
+&=\sum_{i=1}^{n}-exp(\boldsymbol{\beta}'\boldsymbol{x}_i)+y_i\boldsymbol{\beta}'\boldsymbol{x}_i-log(y_i!).\\
+\end{align*}
+$$
+
+## (2) and (3)
+
+We can obtain the MLE by solving the first order condition
+
+$$\frac{\partial logL(\boldsymbol{\beta}:y_1,...,y_n)}{\partial \boldsymbol{\beta}} = \sum_{i=1}^{n}-exp(\boldsymbol{\beta}'\boldsymbol{x}_i)\boldsymbol{x_i}+y_i\boldsymbol{x}_i =\sum_{i=1}^{n}\boldsymbol{x}_i[-exp(\boldsymbol{\beta}'\boldsymbol{x}_i)+y_i]=\boldsymbol{0}$$
+
+We could also check the second order condition
+
+$$\frac{\partial^2 logL(\boldsymbol{\beta}:y_1,...,y_n)}{\partial \boldsymbol{\beta}\partial\boldsymbol{\beta}'}  =\sum_{i=1}^{n}-exp(\boldsymbol{\beta}'\boldsymbol{x}_i)\boldsymbol{x_i}\boldsymbol{x_i}'$$
+
+The diagonal terms of this matrix is negative, which suggests this matrix is a negative definite matrix. It is a maximum.
+
+
+By Proposition 5.6 from the lecture note, if $\Theta$ is a compact subset of $\mathbb{R}^{k}$ and the support is a continuous function of $\boldsymbol{\theta}$ then the MLE exists. Moreover, if the support function is also differentiable in $\boldsymbol{\theta}$ and the MLE $\hat{\boldsymbol{\theta}}$ is interior to $\Theta$ then
+
+$$S(\hat{\boldsymbol{\theta}}:z_1,...,z_n) = S(\boldsymbol{\theta}:z_1,...,z_n)|_{\boldsymbol{\theta}=\hat{\boldsymbol{\theta}}}=\boldsymbol{0}.$$
+
+In this case, if we set the parameter space $\Theta$ to be a compact subset of $\mathbb{R}^{k}$. Then, because the support is a continuous function of $\boldsymbol{\beta}$, the MLE exists. Moreover, if we assume the MLE $\hat{\boldsymbol{\beta}}$ is interior to $\Theta$, then since the support function is differentiable in $\boldsymbol{\beta}$, the MLE can be obtained by solving the first order condition.
+
+
+## (4)
+
+To be able to use the WLLN(Khinchine), $\boldsymbol{z}_i = \boldsymbol{x}_i[y_i-exp(\boldsymbol{\beta}'\boldsymbol{x}_i)]$ needs to be iid,  $E[\boldsymbol{z}_i]<\boldsymbol{\infty}$, and $var[\boldsymbol{z}_i]<\boldsymbol{\infty}$.
+
+Hence, $\boldsymbol{x}_i$ needs to be iid, and the first two moments of $\boldsymbol{x}_i$ does exist.
+
+By the WLLN,
+
+$$\frac{1}{n}\sum_{i=1}^{n}\boldsymbol{x}_i[y_i-exp(\boldsymbol{\beta}'\boldsymbol{x}_i)] \overset{p}{\longrightarrow}E[\boldsymbol{x}\{y-exp(\boldsymbol{\beta}'\boldsymbol{x})\}].$$
+
+We need conditions (i) to (v) from the lecture note to argue that $\hat{\boldsymbol{\beta}}$ is a consistent estimator of $\boldsymbol{\beta}$.
+
+
+
 
 
 
