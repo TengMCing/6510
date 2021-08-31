@@ -1,0 +1,212 @@
+---
+title: "ex5"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1
+
+## (1)
+
+The support is 
+$$
+\begin{align}
+logL(\boldsymbol{\theta}:\boldsymbol{y}) &= logZ(\boldsymbol{y}) + logf(\boldsymbol{y}:\boldsymbol{\theta}) \\
+&= logZ(\boldsymbol{y}) + log\prod_{i=1}^{n}f(y_i:\boldsymbol{\theta})\\
+&= logZ(\boldsymbol{y}) + \sum_{i=1}^{n}logf(y_i:\boldsymbol{\theta})\\
+&= logZ(\boldsymbol{y}) + \sum_{i=1}^{n}-\frac{1}{2}log(2\pi\sigma^2)-\frac{1}{2}\frac{(y_i-\mu)^2}{\sigma^2}.\\
+\end{align}
+$$
+
+The score function is 
+
+$$
+\begin{align*}
+\frac{\partial logL(\boldsymbol{\theta}:\boldsymbol{y})}{\partial\boldsymbol{\theta}} &= \begin{bmatrix}\sum_{i=1}^{n} -\frac{\mu-y_i}{\sigma^2} \\ \sum_{i=1}^{n} -\frac{1}{2\sigma^2} + \frac{(y_i-\mu)^2}{2\sigma^4} \end{bmatrix}.
+\end{align*}
+$$
+
+The Hessian is 
+
+$$
+\begin{align*}
+\frac{\partial^2 logL(\boldsymbol{\theta}:\boldsymbol{y})}{\partial\boldsymbol{\theta}\partial\boldsymbol{\theta}'} &= \begin{bmatrix}\sum_{i=1}^{n} -\frac{1}{\sigma^2} &  \sum_{i=1}^{n} \frac{\mu-y_i}{\sigma^4} \\ \sum_{i=1}^{n} \frac{\mu-y_i}{\sigma^4} & \sum_{i=1}^{n} \frac{1}{2\sigma^4} - \frac{(y_i-\mu)^2}{\sigma^6} \end{bmatrix}.
+\end{align*}
+$$
+
+The information matrix is 
+$$
+\begin{align*}
+I(\boldsymbol{\theta}) &= -E\left[\frac{\partial^2 logL(\boldsymbol{\theta}:\boldsymbol{y})}{\partial\boldsymbol{\theta}\partial\boldsymbol{\theta}'}\right]\\
+&= -E\begin{bmatrix}\sum_{i=1}^{n} -\frac{1}{\sigma^2} &  \sum_{i=1}^{n} \frac{\mu-y_i}{\sigma^4} \\ \sum_{i=1}^{n} \frac{\mu-y_i}{\sigma^4} & \sum_{i=1}^{n} \frac{1}{2\sigma^4} - \frac{(y_i-\mu)^2}{\sigma^6} \end{bmatrix}\\
+&= \begin{bmatrix} \frac{n}{\sigma^2_0} & 0 \\ 0 &  \frac{n}{2\sigma_0^4}\end{bmatrix}.
+\end{align*}
+$$
+
+## (2)
+
+### (a)
+
+$$h(\boldsymbol{\theta}) = (\mu-\mu_0,0\times\sigma^2)' = (0,0)'.$$
+
+$$D(\boldsymbol{\theta}) = \frac{\partial h(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}'}=\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}.$$
+
+The Wald test statistic is
+$$
+\begin{align*}
+TW_n &= \left.nh(\boldsymbol{\theta})'\left[D(\boldsymbol{\theta})\widehat{i(\boldsymbol{\theta})}^{-1}D(\boldsymbol{\theta})'\right]^{-1}h(\boldsymbol{\theta})\right|_{\boldsymbol{\theta} = \hat{\boldsymbol{\theta}}} \\
+&= n\begin{bmatrix}\hat{\mu}-\mu_0 & 0\end{bmatrix}\left[\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}\begin{bmatrix}\hat{\sigma}^2 & 0 \\ 0 & \hat{\sigma}^4/2\end{bmatrix}\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}\right]^{-1}\begin{bmatrix}\hat{\mu}-\mu_0 \\ 0\end{bmatrix} \\
+&= n\begin{bmatrix}\hat{\mu}-\mu_0 & 0\end{bmatrix}\begin{bmatrix}\hat{\sigma}^{-2} & 0 \\ 0 & 0\end{bmatrix}\begin{bmatrix}\hat{\mu}-\mu_0 \\ 0\end{bmatrix} \\
+&= n\hat{\sigma}^{-2}(\hat{\mu}-\mu_0)^2 \\
+&= n\frac{(\bar{y}-\mu_0)^2}{\frac{1}{n}\sum_{i=1}^{n}(y_i - \bar{y})^2}. \\
+\end{align*}
+$$
+
+Given $\tilde{\mu} = \mu_0$, the restricted MLE $\tilde{\sigma}^2 = \frac{1}{n}\sum_{i=1}^{n}(y_i-\mu_0)^2$.
+
+The LM test statistic is 
+
+$$
+\begin{align*}
+TS_n &= n^{-1}S(\tilde{\boldsymbol{\theta}})'\widehat{i(\tilde{\boldsymbol{\theta}})}^{-1}S(\tilde{\boldsymbol{\theta}}) \\
+&= n^{-1}S(\theta_0)'\widehat{i(\boldsymbol{\theta}_0)}^{-1}S(\theta_0)\\
+&= n^{-1}\begin{bmatrix}\sum_{i=1}^{n} -\frac{\mu_0-y_i}{\tilde{\sigma}^2} \\ 0 \end{bmatrix}'\begin{bmatrix}\tilde{\sigma}^2 & 0 \\ 0 & \tilde{\sigma}^4/2\end{bmatrix}\begin{bmatrix}\sum_{i=1}^{n} -\frac{\mu_0-y_i}{\tilde{\sigma}^2} \\ 0 \end{bmatrix}\\
+&= n^{-1}\begin{bmatrix}\sum_{i=1}^{n} -\mu_0+y_i \\ 0 \end{bmatrix}'\begin{bmatrix}\sum_{i=1}^{n} -\frac{\mu_0-y_i}{\tilde{\sigma}^2} \\ 0 \end{bmatrix}\\
+&= n\frac{(\bar{y}-\mu_0)^2}{\frac{1}{n}\sum_{i=1}^{n}(y_i-\mu_0)^2}. \\
+\end{align*}
+$$
+The likelihood ratio test statistic is
+$$
+\begin{align}
+TLR_n &= 2[logL(\hat{\theta}) - logL(\tilde{\theta})]\\
+&= 2\left[\sum_{i=1}^{n}-\frac{1}{2}log(2\pi\hat{\sigma}^2)-\frac{1}{2}\frac{(y_i-\hat{\mu})^2}{\hat{\sigma}^2} - \sum_{i=1}^{n}-\frac{1}{2}log(2\pi\tilde{\sigma}^2)-\frac{1}{2}\frac{(y_i-\tilde{\mu})^2}{\tilde{\sigma}^2}\right]\\
+&= \sum_{i=1}^{n}-log(\hat{\sigma}^2)-\frac{(y_i-\hat{\mu})^2}{\hat{\sigma}^2} - \sum_{i=1}^{n}-log(\tilde{\sigma}^2)-\frac{(y_i-\tilde{\mu})^2}{\tilde{\sigma}^2}\\
+&= \sum_{i=1}^{n}-log(\hat{\sigma}^2) - \sum_{i=1}^{n}-log(\tilde{\sigma}^2)\\
+&= \sum_{i=1}^{n}log(\tilde{\sigma}^2/\hat{\sigma}^2)\\
+&= nlog\left(\frac{\sum_{i=1}^{n}(y_i-\mu_0)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}\right).\\
+\end{align}
+$$
+
+
+## (3)
+
+$$
+\begin{align*}
+log(x) &\leq x-1 \\
+-log(x) &\geq 1-x\\
+TLR_n &=nlog\left(\frac{\sum_{i=1}^{n}(y_i-\mu_0)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}\right) \\
+&= -nlog\left(\frac{\sum_{i=1}^{n}(y_i-\mu_0)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}\right) \\
+&\geq n\left(1-\frac{\sum_{i=1}^{n}(y_i-\mu_0)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}\right) \\
+&= n\left(\frac{\sum_{i=1}^{n}(y_i-\bar{y})^2-\sum_{i=1}^{n}(y_i-\mu_0)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}\right) \\
+&= n\left(\frac{n(\bar{y}-\mu_0)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}\right) \\
+&= n\frac{(\bar{y}-\mu_0)^2}{\frac{1}{n}\sum_{i=1}^{n}(y_i-\mu_0)^2}\\
+&= TS_n.
+\end{align*}
+$$
+
+$$
+\begin{align*}
+log(x) &\leq x-1 \\
+TLR_n &=nlog\left(\frac{\sum_{i=1}^{n}(y_i-\mu_0)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}\right) \\
+&\leq n\left(\frac{\sum_{i=1}^{n}(y_i-\mu_0)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}-1\right) \\
+&= n\left(\frac{\sum_{i=1}^{n}(y_i-\mu_0)^2-\sum_{i=1}^{n}(y_i-\bar{y})^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}\right) \\
+&= n\left(\frac{n(\bar{y}-\mu_0)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}\right) \\
+&= n\frac{(\bar{y}-\mu_0)^2}{\frac{1}{n}\sum_{i=1}^{n}(y_i-\bar{y})^2}\\
+&= TW_n.
+\end{align*}
+$$
+# Question 2
+
+## (1)
+
+We can express the model as:
+
+$$\begin{bmatrix}\boldsymbol{y}_1 \\ \boldsymbol{y}_2 \end{bmatrix} = \begin{bmatrix}\boldsymbol{X}_1 & 0 \\ 0 &  \boldsymbol{X}_2 \end{bmatrix}\begin{bmatrix}\boldsymbol{\beta}_1 \\ \boldsymbol{\beta}_2 \end{bmatrix} + \begin{bmatrix}\boldsymbol{\varepsilon}_1 \\ \boldsymbol{\varepsilon}_2 \end{bmatrix},$$
+
+where $\boldsymbol{\varepsilon}_1 \sim N(0,\sigma^2)$ and $\boldsymbol{\varepsilon}_1 \sim N(0,\sigma^2)$.
+
+Let $\boldsymbol{y} = \begin{bmatrix}\boldsymbol{y}_1 \\ \boldsymbol{y}_2 \end{bmatrix}$, $\boldsymbol{X} = \begin{bmatrix}\boldsymbol{X}_1 & 0 \\ 0 & \boldsymbol{X}_2 \end{bmatrix}$, and $\boldsymbol{\beta} = \begin{bmatrix}\boldsymbol{\beta}_1 \\ \boldsymbol{\beta}_2 \end{bmatrix}$.
+
+By setting the score function equals to zero, 
+
+$$\frac{\partial logL(\boldsymbol{\beta},\sigma^2:\boldsymbol{y})}{\partial\boldsymbol{\beta}} = \frac{\boldsymbol{X}'(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})}{\sigma^2}=0$$
+$$\frac{\partial logL(\boldsymbol{\beta},\sigma^2:\boldsymbol{y})}{\partial\sigma^2} = -\frac{n}{2\sigma^2}+\frac{(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})'(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})}{2\sigma^4}=0$$
+
+Since $\boldsymbol{X}'\boldsymbol{X}$ is nonsingular. We have $\hat{\boldsymbol{\beta}}=(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{y}$ and $\hat{\sigma^2} = (\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})n^{-1}$.
+
+The maximum log-likelihood is
+$$
+\begin{align*}
+logL(\boldsymbol{y}:\hat{\boldsymbol{\beta}},\hat{\sigma}|\boldsymbol{X}) &= -\frac{n}{2}log(2\pi\hat{\sigma}^2)-\frac{(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})}{2\hat{\sigma}^2}\\
+&=-\frac{n}{2}log(2\pi \boldsymbol{e}'\boldsymbol{e}n^{-1})-\frac{\boldsymbol{e}'\boldsymbol{e}}{2\boldsymbol{e}'\boldsymbol{e}n^{-1}}\\
+&=-\frac{n}{2}log[2\pi(\boldsymbol{e}_1'\boldsymbol{e}_1 + \boldsymbol{e}_2'\boldsymbol{e}_2)n^{-1}]-\frac{n}{2}.\\
+\end{align*}
+$$
+
+## (2)
+
+We have derived the solution in (1), though the dimension of $\boldsymbol{\beta}$ is now only $k\times 1$, and the dimension of $\boldsymbol{X}$ is now $n\times k$, the solution is still hold. The log-likelihood is
+$$logL(\boldsymbol{y}:\hat{\boldsymbol{\beta}},\hat{\sigma}|\boldsymbol{X}) = -\frac{n}{2}log(2\pi\hat{\sigma}^2)-\frac{(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})}{2\hat{\sigma}^2} = -\frac{n}{2}log(2\pi\boldsymbol{e}_0'\boldsymbol{e}_0n^{-1})-\frac{\boldsymbol{e}_0'\boldsymbol{e}_0}{2\boldsymbol{e}_0'\boldsymbol{e}_0n^{-1}}=-\frac{n}{2}log(2\pi\boldsymbol{e}_0'\boldsymbol{e}_0n^{-1})-\frac{n}{2}.$$
+
+## (3)
+
+The LR test statistic is
+
+$$TLR_n = 2[logL(\boldsymbol{\theta}_U) - logL(\boldsymbol{\theta}_R)]=-nlog[2\pi(\boldsymbol{e}_1'\boldsymbol{e}_1 + \boldsymbol{e}_2'\boldsymbol{e}_2)n^{-1}]+nlog(2\pi\boldsymbol{e}_0'\boldsymbol{e}_0n^{-1})=nlog\left(\frac{\boldsymbol{e}_0'\boldsymbol{e}_0}{\boldsymbol{e}_1'\boldsymbol{e}_1 + \boldsymbol{e}_2'\boldsymbol{e}_2}\right).$$
+
+We reject the null hypothesis when $TLR_n > \mathcal{X}^2_{1-\alpha}(k)$.
+
+We can see that we reject the null hypothesis when the unrestricted RSS is significantly smaller than the restricted RSS.
+
+The chow test uses the test statistic $$\lambda = \frac{n-2k}{k}\left(\frac{\boldsymbol{e}_0'\boldsymbol{e}_0}{\boldsymbol{e}_1'\boldsymbol{e}_1 + \boldsymbol{e}_2'\boldsymbol{e}_2}-1\right).$$
+
+# Question 3
+
+## (1)
+
+The information matrix is
+
+$$i(\theta) = -E\left[\frac{d^2logL(\theta:y)}{d\theta^2}\right]=\begin{bmatrix}-\frac{1}{\theta_0^2}+\frac{2y}{\theta_0^3}\end{bmatrix}$$
+
+$$h(\theta) = \begin{bmatrix}\theta-\theta_0\end{bmatrix}.$$
+
+$$D(\theta) = \frac{dh(\theta)}{d\theta}=1.$$
+
+$$
+\begin{align*}
+TW_n &= \left.nh(\theta)'\left[D(\theta)\widehat{i(\theta)}^{-1}D(\theta)'\right]^{-1}h(\theta)\right|_{\theta = \hat{\theta}} \\
+&= n\begin{bmatrix}\hat{\theta}-\theta_0\end{bmatrix}'\begin{bmatrix}-\frac{1}{\hat{\theta}^2}+\frac{2y}{\hat{\theta}^3}\end{bmatrix}\begin{bmatrix}\hat{\theta}-\theta_0\end{bmatrix} \\
+&= n(\hat{\theta}-\theta_0)^2(-\hat{\theta}^{-2}+2y\hat{\theta}^{-3}).
+\end{align*}
+$$
+## (2)
+
+$$
+\begin{align*}
+TLR_n &= 2[logL(\hat{\theta}_U) - logL(\hat{\theta}_R)] \\
+&= 2[]
+\end{align*}
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
