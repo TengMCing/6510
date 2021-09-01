@@ -122,6 +122,7 @@ TLR_n &=nlog\left(\frac{\sum_{i=1}^{n}(y_i-\mu_0)^2}{\sum_{i=1}^{n}(y_i-\bar{y})
 &= TW_n.
 \end{align*}
 $$
+
 # Question 2
 
 ## (1)
@@ -173,33 +174,118 @@ The chow test uses the test statistic $$\lambda = \frac{n-2k}{k}\left(\frac{\bol
 
 The information matrix is
 
-$$i(\theta) = -E\left[\frac{d^2logL(\theta:y)}{d\theta^2}\right]=\begin{bmatrix}-\frac{1}{\theta_0^2}+\frac{2y}{\theta_0^3}\end{bmatrix}$$
+$$i(\theta) = \left.-E\left[\frac{d^2logL(\theta:y)}{d\theta^2}\right]\right|_{\theta = \theta_0}=\begin{bmatrix}\frac{1}{\theta_0^2}\end{bmatrix}$$
 
 $$h(\theta) = \begin{bmatrix}\theta-\theta_0\end{bmatrix}.$$
 
-$$D(\theta) = \frac{dh(\theta)}{d\theta}=1.$$
+$$D(\theta) = \frac{dh(\theta)}{d\theta}=[1].$$
 
 $$
 \begin{align*}
 TW_n &= \left.nh(\theta)'\left[D(\theta)\widehat{i(\theta)}^{-1}D(\theta)'\right]^{-1}h(\theta)\right|_{\theta = \hat{\theta}} \\
-&= n\begin{bmatrix}\hat{\theta}-\theta_0\end{bmatrix}'\begin{bmatrix}-\frac{1}{\hat{\theta}^2}+\frac{2y}{\hat{\theta}^3}\end{bmatrix}\begin{bmatrix}\hat{\theta}-\theta_0\end{bmatrix} \\
-&= n(\hat{\theta}-\theta_0)^2(-\hat{\theta}^{-2}+2y\hat{\theta}^{-3}).
+&= n\begin{bmatrix}\hat{\theta}-\theta_0\end{bmatrix}'\begin{bmatrix}\frac{1}{\hat{\theta}^2}\end{bmatrix}\begin{bmatrix}\hat{\theta}-\theta_0\end{bmatrix} \\
+&= n(\hat{\theta}-\theta_0)^2\hat{\theta}^{-2}.
 \end{align*}
 $$
+
 ## (2)
 
 $$
 \begin{align*}
 TLR_n &= 2[logL(\hat{\theta}_U) - logL(\hat{\theta}_R)] \\
-&= 2[]
+&= 2\left[\sum_{i=1}^{n}log(\theta_0/\hat{\theta})-\frac{y_i}{\hat{\theta}}+\frac{y_i}{\theta_0}\right]\\
+&= 2nlog(\theta_0/\hat{\theta})-2n+2n\bar{y}/\theta_0.
 \end{align*}
 $$
 
+## (3)
 
+$$
+\begin{align*}
+TS_n &= n^{-1}S(\tilde{\theta})'\widehat{i(\tilde{\theta})}^{-1}S(\tilde{\theta}) \\
+&= n^{-1} (\sum_{i=1}^{n} -\theta_0^{-1} +y_i\theta_0^{-2} )^2\theta_0^2\\
+&= n(-\theta_0^{-1} + \bar{y}\theta_0^{-2} )^2\theta_0^2.\\
+\end{align*}
+$$
 
+## (4)
 
+Wald
 
+```{r}
+n <- 40
+theta_0 <- 1
+theta_hat <- 1.25
+n*(theta_hat-theta_0)^2*theta_hat^(-2)
+```
 
+LR
+
+```{r}
+2*n*log(theta_0/theta_hat)-2*n+2*n*theta_hat/theta_0
+```
+
+LM
+
+```{r}
+n*(-theta_0^(-1)+theta_hat*theta_0^(-2))^2*theta_0^2
+```
+
+# Question 4
+
+## (1)
+
+The pdf of $X$ is $f(x) = [qp + (1-p)(1-q)]^x [(1-q)p + q(1-p)]^{(1-x)}$, $X \in \{0,1\}$.
+
+The mean of $X$ is $E[X] = qp + (1-p)(1-q)$.
+
+The variance of $X$ is $V[X] = E[X^2] - (E[X])^2 = qp + (1-p)(1-q) - [qp + (1-p)(1-q)]^2$.
+
+## (2)
+
+Let $g = qp + (1-p)(1-q)$, and $1-g = 1- qp - (1-p)(1-q)$.
+
+By solving the first order condition of the log-likelihood, we obtain the MLE of $g$
+
+$$\frac{d logL(g,\boldsymbol{X})}{dg} = \sum_{i=1}^{n}x/g+(1-x)/(1-g)=0$$
+$$\hat{g} = \bar{x}.$$
+
+By the invariance of MLE, since $g = qp + (1-p)(1-q)$ which is a one-to-one mapping, the MLE of $p$ will be $\hat{p} = (\bar{x}+q-1)/(2q-1)$.
+
+## (3)
+
+The mean of $\hat{p}$ is $E[\hat{P}] = E[(\bar{x}+q-1)/(2q-1)] = \frac{qp + (1-p)(1-q) + q - 1}{2q-1} = p$.
+
+The variance of $\hat{p}$ is $V[\hat{P}] = V[(\bar{x}+q-1)/(2q-1)] = V[\bar{x}]/(2q-1)^2 = nV[x]/[(2q-1)n]^2 =  g(1-g)/[n(2q-1)^2]$.
+
+$V[\hat{P}] = g(1-g)/[n(2q-1)^2] \overset{p}{\rightarrow}0$ as $n \rightarrow \infty$.
+
+## (4)
+
+The information per observation is
+
+$$
+\begin{align*}
+E\left[\frac{d^2 logL(p,\boldsymbol{x})}{dp^2}\right] &= E\left[\sum_{i=1}^{n}\frac{d}{dp}\frac{(2q-1)x}{qp + (1-p)(1-q)} + \frac{(1-2q)(1-x)}{(1-q)p+q(1-p)}\right] \\
+&= E\left[\sum_{i=1}^{n}-\frac{(2q-1)^2x}{[qp+(1-p)(1-q)]^2}-\frac{(1-x)(1-2q)^2}{[(1-q)p+q(1-p)]^2}\right]\\
+&= E\left[-(2q-1)^2\left[\frac{\sum_{i=1}^{n}x}{g^2}+\frac{\sum_{i=1}^{n}1-x}{(1-g)^2}\right]\right] \\
+&= -(2q-1)^2(g^{-1}+(1-g)^{-1})\\
+&= -(2q-1)^2[g(1-g)]^{-1}\\
+&= V[\hat{P}]\times n.
+\end{align*}
+$$
+
+## (5)
+
+```{r}
+x_bar <- 0.3
+q <- 0.25
+(x_bar+q-1)/(2*q-1)
+```
+
+## (6)
+
+If the coin is not biased, the estimator is not well-defined.
 
 
 
