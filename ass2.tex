@@ -1,0 +1,210 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{cases}
+\usepackage{bbm}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\hypertarget{question-1}{%
+\section{Question 1}\label{question-1}}
+
+\hypertarget{a}{%
+\subsection{(a)}\label{a}}
+
+Set
+\(\boldsymbol{y} = (y_{11},..,y_{1T},y_{21},...,y_{2T},...,y_{N1},...,y_{NT})'\),
+\(\boldsymbol{\varepsilon} = (\varepsilon_{11},..,\varepsilon_{1T},\varepsilon_{21},...,\varepsilon_{2T},...,\varepsilon_{N1},...,\varepsilon_{NT})'\)
+and
+\(\boldsymbol{X} = [\boldsymbol{x}_{11},...,\boldsymbol{x}_{1T},\boldsymbol{x}_{21},...,\boldsymbol{x}_{2T},...,\boldsymbol{x}_{N1},...,\boldsymbol{x}_{NT}]'\),
+where \(\boldsymbol{x}_{it}=(x_{it,1},...,x_{it,k})'\).
+
+The linear regression model is given as
+
+\[y_{it} = \alpha_i+\boldsymbol{x}_{it}'\boldsymbol{\beta}+\varepsilon_{it}, ~i=1,...,N;t=1,...,T,\]
+where \(\boldsymbol{\beta} = (\beta_1, ..., \beta_k)'\).
+
+Then, let
+\(\boldsymbol{g} = (\alpha_{11},..,\alpha_{1T},\alpha_{21},...,\alpha_{2T},...,\alpha_{N1},...,\alpha_{NT})'\),
+where \(\alpha_{it} = \alpha_{i}\) for \(t=1,..,T\), the model can be
+expressed in matrix vector form as
+
+\[\boldsymbol{y} = \boldsymbol{g} + \boldsymbol{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}.\]
+
+It follows that the vector \(\boldsymbol{g}\) can be further expressed
+as
+
+\[\boldsymbol{g} = \boldsymbol{D}\boldsymbol{\alpha},\] where
+\(\boldsymbol{\alpha} = (\alpha_1, ..., \alpha_N)'\) and
+
+\[\boldsymbol{D} = [\boldsymbol{d}_1, .., \boldsymbol{d}_N]= \begin{bmatrix}\boldsymbol{1}_T & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & \boldsymbol{1}_T & \cdots & \boldsymbol{0} \\ \vdots &\ \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{1}_T\end{bmatrix}.\]
+
+Therefore, the matrix form of the model can be expressed as
+
+\[\boldsymbol{y} = \boldsymbol{D\alpha} + \boldsymbol{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}.\]
+
+\hypertarget{b}{%
+\subsection{(b)}\label{b}}
+
+Suppose that \(\boldsymbol{X}\) has full column rank. By the
+Frisch-Waugh-Lovell Theorem, the OLS estimate of coefficient
+\(\boldsymbol{\beta}\) of the model in (a) is
+
+\[\boldsymbol{b} = (\boldsymbol{X'R_dX})^{-1}\boldsymbol{X'R_dy},\]
+where
+\(\boldsymbol{R_d} = \boldsymbol{I}_{NT} - \boldsymbol{D}(\boldsymbol{D'D})^{-1}\boldsymbol{D}'\).
+
+Since the selection matrix is
+\[\boldsymbol{D} = \begin{bmatrix}\boldsymbol{1}_T & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & \boldsymbol{1}_T & \cdots & \boldsymbol{0} \\ \vdots &\ \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{1}_T\end{bmatrix},\]
+
+then
+
+\[\boldsymbol{D'D} = \begin{bmatrix}\boldsymbol{1}_T & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & \boldsymbol{1}_T & \cdots & \boldsymbol{0} \\ \vdots &\ \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{1}_T\end{bmatrix}' \begin{bmatrix}\boldsymbol{1}_T & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & \boldsymbol{1}_T & \cdots & \boldsymbol{0} \\ \vdots &\ \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{1}_T\end{bmatrix}=\begin{bmatrix}T & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & T & \cdots & \boldsymbol{0} \\ \vdots &\ \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & T\end{bmatrix}=T\boldsymbol{I}_{N}.\]
+
+It follows that the \(NT \times NT\) projection matrix is
+
+\[\boldsymbol{D}(\boldsymbol{D}'\boldsymbol{D})^{-1}\boldsymbol{D}' = \begin{bmatrix}\boldsymbol{1}_T & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & \boldsymbol{1}_T & \cdots & \boldsymbol{0} \\ \vdots &\ \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{1}_T\end{bmatrix}T^{-1}\boldsymbol{I}_{N} \begin{bmatrix}\boldsymbol{1}_T & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & \boldsymbol{1}_T & \cdots & \boldsymbol{0} \\ \vdots &\ \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{1}_T\end{bmatrix}'=T^{-1}\begin{bmatrix}\boldsymbol{J}_T & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & \boldsymbol{J}_T & \cdots & \boldsymbol{0} \\ \vdots &\ \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{J}_T\end{bmatrix},\]
+
+where \(\boldsymbol{J}_T\) is a \(T \times T\) unit matrix.
+
+Hence, by applying the residual operator \(\boldsymbol{R_d}\) on
+\(\boldsymbol{X}\), we have
+
+\[\boldsymbol{R_dX} = \left(\boldsymbol{I}_{NT} - T^{-1}\begin{bmatrix}\boldsymbol{J}_T & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & \boldsymbol{J}_T & \cdots & \boldsymbol{0} \\ \vdots &\ \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{J}_T\end{bmatrix}\right)\boldsymbol{X}=\boldsymbol{X}-\begin{bmatrix}\bar{\boldsymbol{X}}_1 \\ \bar{\boldsymbol{X}}_2 \\  \vdots \\ \bar{\boldsymbol{X}}_N \end{bmatrix},\]
+
+where
+\(\bar{\boldsymbol{X}}_i = [T^{-1}\sum_{t=1}^{T}\boldsymbol{x}_{it}, T^{-1}\sum_{t=1}^{T}\boldsymbol{x}_{it}, ..., T^{-1}\sum_{t=1}^{T}\boldsymbol{x}_{it}]'\)
+is a \(T \times K\) matrix.
+
+Similarly, by applying the residual operator \(\boldsymbol{R_d}\) on
+\(\boldsymbol{y}\), we have
+
+\[\boldsymbol{R_dy} = \left(\boldsymbol{I}_{NT} - T^{-1}\begin{bmatrix}\boldsymbol{J}_T & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & \boldsymbol{J}_T & \cdots & \boldsymbol{0} \\ \vdots &\ \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{J}_T\end{bmatrix}\right)\boldsymbol{y} = \boldsymbol{y}-\begin{bmatrix}\bar{\boldsymbol{y}}_1 \\ \bar{\boldsymbol{y}}_2 \\  \vdots \\ \bar{\boldsymbol{y}}_N \end{bmatrix},\]
+
+where
+\(\bar{\boldsymbol{y}}_i=(T^{-1}\sum_{t=1}^{T}y_{it}, T^{-1}\sum_{t=1}^{T}y_{it}, ..., T^{-1}\sum_{t=1}^{T}y_{it})'\)
+is a length \(T\) vector.
+
+Because \(\boldsymbol{R_d}\) is a idempotent matrix, which means
+\(\boldsymbol{R_d} = \boldsymbol{R_d}' = \boldsymbol{R_d}'\boldsymbol{R_d} = \boldsymbol{R_d}\boldsymbol{R_d}'\),
+the regression coefficient \(\boldsymbol{b}\) can be expressed as
+
+\[\boldsymbol{b} = (\boldsymbol{X'R_dR_dX})^{-1}\boldsymbol{X'R_dR_dy},\]
+which is the solution by regressing \(\{y_{it}-\bar{y}_i\}\) on
+\(\{\boldsymbol{x}_{it}-\bar{\boldsymbol{x}}_i\}\), where
+\(\bar{y}_i = T^{-1}\sum_{i=1}^{T}y_{it}\) and
+\(\bar{\boldsymbol{x}}_{i} = T^{-1}\sum_{i=1}^{T}\boldsymbol{x}_{it}\).
+
+\hypertarget{c}{%
+\subsection{(c)}\label{c}}
+
+Suppose that
+\(\mathbb{E}[\boldsymbol{\varepsilon}_t|\boldsymbol{X}_t] = \boldsymbol{0}\)
+and
+\(\mathbb{E}[\boldsymbol{\varepsilon}_t'\boldsymbol{\varepsilon}_t|\boldsymbol{X}_t]=\sigma^2\boldsymbol{I}_N\)
+where
+\(\boldsymbol{X}_t = (\boldsymbol{x}_{1t},...,\boldsymbol{x}_{Nt})'\)
+and
+\(\boldsymbol{\varepsilon}_t = (\boldsymbol{\varepsilon}_{1t},...,\boldsymbol{\varepsilon}_{Nt})'\).
+
+If the pairs \((\boldsymbol{X}_t,\boldsymbol{\varepsilon}_t)\) ,
+\(t=1,...,T\), are independently distributed, then
+
+\[\mathbb{E}[\boldsymbol{\varepsilon}'\boldsymbol{\varepsilon}|\boldsymbol{X}] = \begin{bmatrix}\mathbb{E}[\boldsymbol{\varepsilon}_1'\boldsymbol{\varepsilon}_1|\boldsymbol{X}] & \mathbb{E}[\boldsymbol{\varepsilon}_1'\boldsymbol{\varepsilon}_2|\boldsymbol{X}] & \cdots & \mathbb{E}[\boldsymbol{\varepsilon}_1'\boldsymbol{\varepsilon}_T|\boldsymbol{X}] \\ \mathbb{E}[\boldsymbol{\varepsilon}_2'\boldsymbol{\varepsilon}_1|\boldsymbol{X}] & \mathbb{E}[\boldsymbol{\varepsilon}_2'\boldsymbol{\varepsilon}_2|\boldsymbol{X}] & \cdots & \mathbb{E}[\boldsymbol{\varepsilon}_2'\boldsymbol{\varepsilon}_T|\boldsymbol{X}] \\ \vdots & \vdots & \ddots & \vdots \\ \mathbb{E}[\boldsymbol{\varepsilon}_T'\boldsymbol{\varepsilon}_1|\boldsymbol{X}] & \mathbb{E}[\boldsymbol{\varepsilon}_T'\boldsymbol{\varepsilon}_2|\boldsymbol{X}] & \cdots & \mathbb{E}[\boldsymbol{\varepsilon}_T'\boldsymbol{\varepsilon}_T|\boldsymbol{X}]\end{bmatrix} = \begin{bmatrix}\sigma^2\boldsymbol{I}_N & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & \sigma^2\boldsymbol{I}_N & \cdots & \boldsymbol{0}\\ \vdots & \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & \sigma^2\boldsymbol{I}_N\end{bmatrix}=\sigma^2\boldsymbol{I}_{NT},\]
+
+because for \(i \neq j\), \(\boldsymbol{\varepsilon}_i\) and
+\(\boldsymbol{\varepsilon}_j\) are independent given \(\boldsymbol{X}\),
+\(\mathbb{E}[\boldsymbol{\varepsilon}_i'\boldsymbol{\varepsilon}_j|\boldsymbol{X}] = \boldsymbol{0}\).
+
+\hypertarget{d}{%
+\subsection{(d)}\label{d}}
+
+Under the assumptions stated in (a), (b) and (c), there are \(N\)
+regressors in \(\boldsymbol{alpha}\) and \(K\) regressors in
+\(\boldsymbol{X}\). The number of observations is \(NT\). Therefore,
+using the Thereon 1.4 from Lecture note I, we have the unbiased OLS
+estimator of \(\sigma^2\) denoted by \(s^2\)
+
+\[s^2 = \frac{\boldsymbol{e}'\boldsymbol{e}}{NT-N-K},\]
+
+where
+\(\boldsymbol{e} = \boldsymbol{y}-\boldsymbol{Da}-\boldsymbol{Xb}\).
+
+By adding \(\boldsymbol{D}'\) on both side of the regression equation,
+we have
+
+\[\boldsymbol{D'y} = \boldsymbol{D'D\alpha} + \boldsymbol{D'X\beta} + \boldsymbol{D'\varepsilon}\]
+
+\hypertarget{question-2}{%
+\section{Question 2}\label{question-2}}
+
+\hypertarget{a-1}{%
+\subsection{(a)}\label{a-1}}
+
+\[\prod_{i=1}^{n}{k \choose r_i}p_d^{r_i}(1-p_d)^{k-r_i}\]
+
+\[L = \prod_{i=1}^{n}p^{\mathbbm{1}(r_i=0)}(1-p)^{\mathbbm{1}(r_i>0)}\]
+
+\end{document}

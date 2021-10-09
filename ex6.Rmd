@@ -1,0 +1,157 @@
+---
+title: "ex6"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+---
+
+# Question 1
+
+## (a)
+
+The first moment of $X$ is 
+$$E[X]=\int_{a}^{b}x\frac{1}{b-a}dx=\frac{b^2-a^2}{2(b-a)}=\frac{(a+b)}{2}.$$
+
+The second moment of $X$ is $$E[X^2]=\int_{a}^{b}x^2\frac{1}{b-a}dx=\frac{b^3-a^3}{3(b-a)}=\frac{a^2+b^2+ab}{3}.$$
+
+## (b)
+
+Let $m_1=n^{-1}\sum_{i=1}^{n}x_i$ and $m_2=n^{-1}\sum_{i=1}^{n}x_i^2$.
+
+Set $m_1-\mu_1=0$ and $m_2-\mu_2=0$. We have 
+$$2m_1-a=b, and$$ 
+$$3m_2=b^2+ba+a^2.$$
+
+It follows 
+
+$$
+\begin{align*}
+3m_2&=b^2+b(2m_1-b)+(2m_1-b)^2\\
+&=4m_1^2+b^2-2m_1b\\
+3m_2-4m_1^2&=b^2-2m_1b\\
+3m_2-3m_2&=(b-m_1)^2\\
+b&=m_1 \pm \sqrt{3m_2-3m_1^2}.
+\end{align*}
+$$
+
+Because $2m_1-b=a$, 
+
+$$
+\begin{align*}
+3m_2&=a^2+a(2m_1-a)+(2m_1-a)^2\\
+&=4m_1^2+a^2-2m_1a\\
+3m_2-4m_1^2&=a^2-2m_1a\\
+3m_2-3m_2&=(a-m_1)^2\\
+a&=m_1 \pm \sqrt{3m_2-3m_1^2}.
+\end{align*}
+$$
+By definition, $b>a$, thus 
+$$\bar{a} = m_1 - \sqrt{3m_2-3m_1^2} \quad and \quad \bar{b}=m_1 + \sqrt{3m_2-3m_1^2}.$$
+
+## (c)
+
+Because $X_i$ is iid, $E[x_i]<\infty$ and $E[x_i^2]<\infty$, by WLLN,
+$$m_1=\frac{1}{n}\sum_{i=1}^{n}x_i \overset{p}{\longrightarrow}E[x] \quad as ~ n\longrightarrow \infty.$$
+
+Also because $X_i$ is iid, $E[X_i^2]<\infty$ and $E[x_i^4]=5^{-1}\sum_{i=0}^{4}a^ib^{4-i}<\infty$, by WLLN, 
+$$m_2=\frac{1}{n}\sum_{i=1}^{n}x_i^2 \overset{p}{\longrightarrow}E[x^2] \quad as ~ n\longrightarrow \infty.$$
+
+Since $g(x)=x^2$ is a continuous function of $x$, by continuous mapping theorem, $$m_1^2 \overset{p}{\longrightarrow}(E[x])^2 \quad as ~ n\longrightarrow \infty.$$ Then, by the property of convergence in probability, $$m_2 - m_1^2 \overset{p}{\longrightarrow} E[x^2] - (E[x])^2 \quad as ~ n \longrightarrow \infty.$$ Since $h(x) = \sqrt{3x}$ is a continuous of $x$ for $x\neq0$, and $E[x^2] - (E[x])^2 = var[x] = 12^{-1}(b-a)^2\neq0$, thus $$\sqrt{3(m_2-m_1^2)} \overset{p}{\longrightarrow} \sqrt{4^{-1}(b-a)^2} \quad n ~ \longrightarrow \infty.$$ 
+
+Again, by the property of convergence in probability, 
+$$m_1-\sqrt{3(m_2-m_1^2)} \overset{p}{\longrightarrow} \frac{a+b}{2}-\sqrt{4^{-1}(b-a)^2} \quad as ~n \longrightarrow \infty, ~and$$
+
+$$m_1+\sqrt{3(m_2-m_1^2)} \overset{p}{\longrightarrow} \frac{a+b}{2}+\sqrt{4^{-1}(b-a)^2} \quad as ~n \longrightarrow \infty.$$
+
+Hence,
+
+$$\bar{a} \overset{p}{\longrightarrow}\frac{a+b}{2}-\sqrt{4^{-1}(b-a)^2} =\frac{a+b}{2}-|2^{-1}(b-a)|=a, \quad n ~ \longrightarrow \infty,$$ and
+
+$$\bar{b} \overset{p}{\longrightarrow}\frac{a+b}{2}+\sqrt{4^{-1}(b-a)^2} =\frac{a+b}{2}+|2^{-1}(b-a)|=b\quad n ~ \longrightarrow \infty.$$
+
+# Question 2
+
+## (a)
+
+Since $\hat{\boldsymbol{\theta}}$ is an optimal GMM estimator, $\boldsymbol{W}_n \overset{p}{\longrightarrow} \boldsymbol{J}$ as $n \longrightarrow \infty$, where $\boldsymbol{J}$ is the asymptotic variance of $\boldsymbol{m(\theta)}$. Suppose $\boldsymbol{A'm(\theta)}$ is the moment conditions, since $\boldsymbol{f(X)} = \boldsymbol{A'X}$ is a continuous function of $\boldsymbol{X}$. By continuous mapping theorem, its asymptotic variance will be $\boldsymbol{A'JA}$. Then, because $\boldsymbol{g(X)}=\boldsymbol{A'XA}$ is also a continuous function of $\boldsymbol{X}$, $\boldsymbol{A'}\boldsymbol{W}_n\boldsymbol{A}\overset{p}{\longrightarrow} \boldsymbol{A'JA}$ as $n \longrightarrow \infty$. Hence, the weighting matrix is chosen as the question stated.
+
+## (b)
+
+When $m=k$, $\boldsymbol{A}$ is a full rank $m\times m$ matrix. Thus, $\boldsymbol{A}^{-1}$ exists. Then
+
+$$\boldsymbol{m(\theta)'A(A'W_nA)^{-1}A'm(\theta)} = \boldsymbol{m(\theta)'AA^{-1}W_n^{-1}A^{-T}A'm(\theta)}=\boldsymbol{m(\theta)'W_n^{-1}m(\theta)}.$$
+Hence, $\widehat{\boldsymbol{\theta}^{(\alpha)}} = \hat{\boldsymbol{\theta}}$.
+
+When $m=p$, $\boldsymbol{A'm(\theta)}$ is a length $p$ vector. It follows that the derivative $\boldsymbol{D}=\frac{\partial\boldsymbol{A'm(\theta)}}{\partial \boldsymbol{\theta}'}$ is square and has full rank, which can be inverted. Hence, 
+
+$$\frac{\partial \boldsymbol{Q(\theta)}}{\partial \boldsymbol{\theta}}=2\boldsymbol{D(\theta)'(A'W_nA)^{-1}A'm(\theta)}=\boldsymbol{0}$$
+$$\Longrightarrow \boldsymbol{A'm(\theta)}=\boldsymbol{D(\theta)^{-T}(A'W_nA) \times0}=\boldsymbol{0}.$$
+
+This is the just-identified case.
+
+## (c)
+
+The asymptotic variance of $\hat{\boldsymbol{\theta}}$ is $(\boldsymbol{D'J^{-1}D})^{-1}$, where $\boldsymbol{D}$ is the probability limit of the $\partial \boldsymbol{m(\theta)}/\partial\boldsymbol{\theta}$ and $\boldsymbol{J}$ is the asymptotic variance of $\boldsymbol{m(\theta)}$.
+
+The asymptotic variance of $\widehat{\boldsymbol{\theta}^{(\alpha)}}$ is $(\boldsymbol{D'A(A'JA)^{-1}A'D})^{-1}$.
+
+We want to show $(\boldsymbol{D'A(A'JA)^{-1}A'D})^{-1} \succeq (\boldsymbol{D'J^{-1}D})^{-1}$, which is equivalent to show $\boldsymbol{D'J^{-1}D} \succeq \boldsymbol{D'A(A'JA)^{-1}A'D}$. 
+
+$$\boldsymbol{D'J^{-1}D} - \boldsymbol{D'A(A'JA)^{-1}A'D} = \boldsymbol{D'[J^{-1}-A(A'JA)^{-1}A']D} \succeq \boldsymbol{0}.$$
+
+
+
+# Question 3
+
+## (a)
+
+$$E[Y_k]=\sum_{y_k=0}^{1}y_kp(y_k)=p_k(\boldsymbol{\theta}).$$
+
+$$Var[Y_k]=\sum_{y_k=0}^{1}y_k^2p(y_k)-(E[Y_k])^2=p_k(\boldsymbol{\theta})(1-p_k(\boldsymbol{\theta})).$$
+
+## (b)
+
+Given $\boldsymbol{y}_{ik}$ is iid. The expectation of $y_{ik}$ is $E[y_{ik}]=p_k(\boldsymbol{\theta})=(1+exp(\boldsymbol{x}'\boldsymbol{\theta}))^{-1} \in (0,1)$, the variance of $y_{ik}$ is $Var[y_{ik}] = p_k(\boldsymbol{\theta})(1-p_k(\boldsymbol{\theta}))=exp(\boldsymbol{x}'\boldsymbol{\theta})(1+exp(\boldsymbol{x}'\boldsymbol{\theta}))^{-2} \in (0,1)$. Hence, by WLLN,
+$$\bar{p}_k=n^{-1}\sum_{i=1}^{n}y_{ik} \overset{p}{\longrightarrow}E[y_{ik}]=p_k(\boldsymbol{\theta})\quad as~n\longrightarrow \infty.$$
+
+## (c)
+
+The moment conditions are $\boldsymbol{m(\theta)} = (\bar{p}_1-p_1(\boldsymbol{\theta}),...,\bar{p}_k-p_k(\boldsymbol{\theta}))'$.
+
+Because the data is iid, the sample variance of the moment conditions is a diagonal matrix with $\bar{p}_k(1-\bar{p}_k)$, $k=1,...,K$, as the diagonal elements.
+
+Thus, the criterion function is
+
+$$\boldsymbol{Q(\theta)} = \boldsymbol{m(\theta)'W(\theta)^{-1}m(\theta)}=\sum_{i=1}^{K}\frac{(\bar{p}_k-p_k(\boldsymbol{\theta}))^2}{\bar{p}_k(1-\bar{p}_k)}.$$
+
+## (d)
+
+$$\tilde{\boldsymbol{\theta}} = \underset{\boldsymbol{\theta}}{argmin}\sum_{k=1}^{K}\frac{(\bar{p}_k-p_k(\boldsymbol{\theta}))^2}{Var(\boldsymbol{m}(\hat{\boldsymbol{\theta}}))}.$$
+
+# Question 4
+
+## (a)
+
+If $\boldsymbol{X'Z}=\boldsymbol{0}$, then $\boldsymbol{X'ZZ'X}=\boldsymbol{0}$, which is not nonsingular.
+
+## (b)
+
+If $\boldsymbol{X'ZZ'X}$ is nonsingular, then the solution to the equations
+
+$$\boldsymbol{X'ZZ'(y-X\beta)}=\boldsymbol{0}$$
+$$\boldsymbol{X'ZZ'y-X'ZZ'X\beta}=\boldsymbol{0}$$
+$$\boldsymbol{X'ZZ'y}=\boldsymbol{X'ZZ'X\beta}$$
+
+$$\boldsymbol{(X'ZZ'X)^{-1}X'ZZ'y}=\bar{\boldsymbol{\beta}}$$
+
+If we plugin it back to 
+
+$$\boldsymbol{Z'(y-X\beta)}=\boldsymbol{0}.$$
+
+Then we have,
+
+$$\boldsymbol{Z'y-Z'X(X'ZZ'X)^{-1}X'ZZ'y}=\boldsymbol{0}$$
+
+$$\boldsymbol{Z'(I-X(X'ZZ'X)^{-1}X'ZZ')y}=\boldsymbol{0}$$

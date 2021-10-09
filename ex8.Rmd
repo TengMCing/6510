@@ -1,0 +1,143 @@
+---
+title: "ex8"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+---
+
+# Q1
+
+The ratio of two Poisson is:
+
+$$\frac{f(y,\mu)}{f(y,\lambda)} = \frac{\mu^ye^{-\mu}}{\lambda^ye^{-\lambda}}\frac{y!}{y!}=e^{-(\mu-\lambda)}(\frac{\mu}{\lambda})^y.$$
+
+Therefore,
+
+$$f(y,\mu) = e^{-(\mu-\lambda)}(\frac{\mu}{\lambda})^yf(y,\lambda)=e^{-(\mu-\lambda)}\exp(log(\frac{\mu}{\lambda})y)=\exp(\alpha y-\psi(\alpha))f(y,\lambda),$$
+where $\alpha = log(\mu/\lambda)$ and $\psi(\alpha) = \lambda(\exp(\alpha)-1)$.
+
+The integral of the pmf is
+
+$$
+\begin{align*}
+\sum_{y\in\mathbb{N}_0} \exp(\alpha y-\psi(\alpha))f(y,\lambda) &= E_\lambda[\exp(\alpha y-\psi(\alpha))] \\
+& = E_\lambda[\exp(\alpha y)\exp(-\psi(\alpha))] \\
+& = E_\lambda[\exp(\alpha y)]\exp(-\psi(\alpha)) \\
+& = E_\lambda[\exp(\alpha y)]\exp(-\psi(\alpha)) \\
+& = M_Y(\alpha)\exp(-\psi(\alpha)) \\
+& = e^{\lambda (e^{\alpha} - 1)}\exp(-\psi(\alpha)) \\
+& = 1.
+\end{align*}
+$$
+
+Hence, $\psi(\alpha)$ is not part of the kernel, but it is necessary to make the integral equals to one.
+
+The first derivative of $\psi(\alpha)$ is 
+
+$$
+\begin{align*}
+\frac{\partial}{\partial\alpha}\psi(\alpha) & = \frac{d\lambda}{d\alpha}(\exp(\alpha) - 1)+\lambda\frac{d}{d\alpha}(\exp(\alpha) - 1) \\
+& = \lambda e^{\alpha}. 
+\end{align*}
+$$
+
+The expectation of $Y$ given $\alpha$ is 
+
+$$
+\begin{align*}
+E_\alpha[Y] & = \sum_{y\in\mathbb{N}_0}ye^{\alpha y-\psi(\alpha)}f(y,\lambda) \\
+& = e^{-\psi(\alpha)}\sum_{y\in\mathbb{N}_0}ye^{\alpha y}f(y,\lambda) \\
+& = e^{-\psi(\alpha)}\sum_{y\in\mathbb{N}_0}ye^{\alpha y}\lambda^ye^{-\lambda}/y!\\
+& = e^{-\psi(\alpha)}\sum_{y\in\mathbb{N}_+}e^{\alpha y}\lambda^ye^{-\lambda}/(y-1)!\\
+& = e^{-\psi(\alpha)}\sum_{z\in\mathbb{N}_0}e^{\alpha (z+1)}\lambda^{z+1}e^{-\lambda}/z! \\
+& = e^{-\psi(\alpha)}\sum_{z\in\mathbb{N}_0}e^{\alpha}e^{\alpha z}\lambda\lambda^{z}e^{-\lambda}/z! \\
+& = e^{-\psi(\alpha)}e^\alpha\lambda\sum_{z\in\mathbb{N}_0}e^{\alpha z}\lambda^{z}e^{-\lambda}/z! \\
+& = e^{-\psi(\alpha)}e^\alpha\lambda E_\lambda[e^{\alpha z}] \\
+& = e^{-\psi(\alpha)}e^\alpha\lambda M_Z(\alpha) \\
+& = e^{-\psi(\alpha)}e^\alpha\lambda e^{\lambda(e^\alpha - 1)} \\
+& = e^\alpha\lambda.
+\end{align*}
+$$
+
+The second derivative of $\psi(\alpha)$ is
+
+$$\frac{\partial^2 \psi(\alpha)}{\partial \alpha^2}=\frac{\partial}{\partial\alpha}\lambda e^{\alpha}=\lambda e^{\alpha}.$$
+
+The random variable $Y$ follows a Poisson distribution. Thus, 
+
+$$Var_\alpha[Y]=E_\alpha[Y] = e^{\alpha}\lambda.$$
+
+# Q2
+
+Given $\boldsymbol{\mu}=E_\boldsymbol{\alpha}[Y]$.
+
+$$\sum_{i=1}^{n} \frac{\partial}{\partial \boldsymbol{\alpha}}\log f(\boldsymbol{y}_i, \boldsymbol{\alpha})=\sum_{i=1}^{n} \frac{\partial}{\partial \boldsymbol{\alpha}}\boldsymbol{\alpha'y}_i-\psi(\boldsymbol{\alpha})+\log(g(\boldsymbol{y}_i))=\sum_{i=1}^{n} \boldsymbol{y}_i-\boldsymbol{\mu}.$$
+
+Hence, the MLE of $\boldsymbol{\mu}$ is 
+
+$$\hat{\boldsymbol{\mu}} = n^{-1}\sum_{i=1}^{n}\boldsymbol{y}_i.$$
+
+The MLE estimator of $\boldsymbol{\alpha}$ is obtained by solving the equation
+
+$$\sum_{i=1}^{n} \frac{\partial}{\partial \boldsymbol{\alpha}}\log f(\boldsymbol{y}_i, \boldsymbol{\alpha})=\sum_{i=1}^{n} \frac{\partial}{\partial \boldsymbol{\alpha}}\boldsymbol{\alpha'y}_i-\psi(\boldsymbol{\alpha})+\log(g(\boldsymbol{y}_i))=\sum_{i=1}^{n} \boldsymbol{y}_i-\frac{\partial \psi(\boldsymbol{\alpha})}{\partial \boldsymbol{\alpha}}=\boldsymbol{0},$$
+
+which is equivalent to solve
+
+$$\left.\frac{\partial \psi(\boldsymbol{\alpha})}{\partial \boldsymbol{\alpha}}\right|_{\boldsymbol{\alpha=\hat{\boldsymbol{\alpha}}}}=\bar{\boldsymbol{y}}.$$
+
+The covariance matrix of $\bar{\boldsymbol{Y}}$ is
+
+$$
+\begin{align*}
+Cov_\boldsymbol{\alpha}[\bar{\boldsymbol{Y}}] & = Cov\left[n^{-1}\sum_{i=1}^{n}\boldsymbol{Y}_i\right] \\
+& = \begin{bmatrix}cov(n^{-1}\sum_{i=1}^{n}Y_{i1}, n^{-1}\sum_{i=1}^{n}Y_{i1}) & \cdots & cov(n^{-1}\sum_{i=1}^{n}Y_{i1}, n^{-1}\sum_{i=1}^{n}Y_{ip}) \\ \vdots & \ddots & \vdots \\ cov(n^{-1}\sum_{i=1}^{n}Y_{ip}, n^{-1}\sum_{i=1}^{n}Y_{i1}) & \cdots & cov(n^{-1}\sum_{i=1}^{n}Y_{ip}, n^{-1}\sum_{i=1}^{n}Y_{ip}) \end{bmatrix}
+\end{align*}
+$$
+
+The second derivative of $\psi(\boldsymbol{\alpha})$ is
+
+$$\frac{\partial^2\psi(\boldsymbol{\alpha})}{\partial\boldsymbol{\alpha}\partial\boldsymbol{\alpha'}} = \frac{\partial E_\boldsymbol{\alpha}(Y)}{\partial\boldsymbol{\alpha'}}=$$
+
+# Q3
+
+The likelihood function can be written as
+
+$$
+\begin{align*}
+L & = \prod_{i=1}^{n} f(y_i,\alpha_i) \\
+& = \prod_{i=1}^{n} \exp(\alpha_iy_i-\psi(\alpha_i))g(y_i) \\
+& = \prod_{i=1}^{n} \exp(\boldsymbol{x}_i'\boldsymbol{\beta}y_i-\psi(\boldsymbol{x}_i'\boldsymbol{\beta}))g(y_i) \\
+& = \exp\left(\sum_{i=1}^{n}\boldsymbol{x}_i'\boldsymbol{\beta}y_i\right)\exp\left(-\sum_{i=1}^{n}\psi(\boldsymbol{x}_i'\boldsymbol{\beta})\right)\prod_{i=1}^{n} g(y_i) \\
+& = \exp\left(\sum_{i=1}^{n}\boldsymbol{x}_i'\boldsymbol{\beta}y_i\right)\exp\left(-n\bar{\psi}(\boldsymbol{\beta})\right)\prod_{i=1}^{n} g(y_i),
+\end{align*}
+$$
+
+where $\bar{\psi}(\boldsymbol{\beta}) = n^{-1}\sum_{i=1}^{n}\psi(\boldsymbol{x}_u'\boldsymbol{\beta})$.
+
+The MLE of $\boldsymbol{\beta}$ is obtained by solving
+
+$$\frac{\partial \log L}{\partial \boldsymbol{\beta}} = \boldsymbol{0}$$
+
+Since,
+
+$$\frac{\partial \log L}{\partial \boldsymbol{\beta}} = \frac{\partial}{\partial\boldsymbol{\beta}} \left(\sum_{i=1}^{n}\boldsymbol{x}_i'\boldsymbol{\beta}y_i \right)-n\bar{\psi}(\boldsymbol{\beta})+\sum_{i=1}^{n}\log g(y_i)= \sum_{i=1}^{n}\boldsymbol{x}_iy_i -\sum_{i=1}^{n}\boldsymbol{x}_i\mu_i(\boldsymbol{\beta}),$$
+
+where $\mu_i(\boldsymbol{\beta}) = \partial\psi(\boldsymbol{x}_i'\boldsymbol{\beta})/\partial\alpha$.
+
+Therefore, the solution is obtained by solving 
+
+$$\sum_{i=1}^{n}\boldsymbol{x}_iy_i -\sum_{i=1}^{n}\boldsymbol{x}_i\mu_i(\boldsymbol{\beta}) = \boldsymbol{0}.$$
+
+The first order Taylor expansion of $\partial\psi(\boldsymbol{x}_i'\boldsymbol{\beta})/\partial\boldsymbol{\beta}$ is
+
+$$
+\begin{align*}
+\left.\frac{\partial \psi(\boldsymbol{x}_i'\boldsymbol{\beta})}{\partial \boldsymbol{\beta}}\right|_{\boldsymbol{\beta} = \hat{\boldsymbol{\beta}}} & = \left.\frac{\partial \psi(\boldsymbol{x}_i'\boldsymbol{\beta})}{\partial \boldsymbol{\beta}}\right|_{\boldsymbol{\beta} = \boldsymbol{\beta}_0} +  \left.\frac{\partial^2 \psi(\boldsymbol{x}_i'\boldsymbol{\beta})}{\partial \boldsymbol{\beta}\partial\boldsymbol{\beta}'}\right|_{\boldsymbol{\beta} = \boldsymbol{\beta}_0}(\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}_0)  +o(||\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}_0||)  \\
+\boldsymbol{x}_i\mu_i(\hat{\boldsymbol{\beta}}) & = \boldsymbol{x}_i\mu_i(\boldsymbol{\beta}_0) + \left.\frac{\partial^2 \psi(\boldsymbol{x}_i'\boldsymbol{\beta})}{\partial \boldsymbol{\beta}\partial\boldsymbol{\beta}'}\right|_{\boldsymbol{\beta} = \boldsymbol{\beta}_0}(\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}_0)  +o(||\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}_0||) \\
+(\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}_0) & = \left[\left.\frac{\partial^2 \psi(\boldsymbol{x}_i'\boldsymbol{\beta})}{\partial \boldsymbol{\beta}\partial\boldsymbol{\beta}'}\right|_{\boldsymbol{\beta} = \boldsymbol{\beta}_0}\right]^{-1}\boldsymbol{x}_i(\mu_i(\hat{\boldsymbol{\beta}}) - \mu_i(\boldsymbol{\beta}_0)) +o(||\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}_0||)  \\
+\sqrt{n}(\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}_0) & = \left[\left.\frac{\partial^2 \psi(\boldsymbol{x}_i'\boldsymbol{\beta})}{\partial \boldsymbol{\beta}\partial\boldsymbol{\beta}'}\right|_{\boldsymbol{\beta} = \boldsymbol{\beta}_0}\right]^{-1}\boldsymbol{x}_i\{\sqrt{n}[\mu_i(\hat{\boldsymbol{\beta}}) - \mu_i(\boldsymbol{\beta}_0)]\} +o(||\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}_0||).
+\end{align*}
+$$
+<!-- Since $o(||\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}_0||) = op(1)$, the random variable $\mu_i(\hat{\boldsymbol{\beta}})$ is the sample mean, and $(\mu_i(\hat{\boldsymbol{\beta}}) - \mu_i(\boldsymbol{\beta}_0)$ has mean $0$ and variance  -->

@@ -1,0 +1,456 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{cases}
+\usepackage{bbm}
+\usepackage{pdfpages}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\includepdf[pages={-}]{document-page0.pdf}
+
+\hypertarget{question-1}{%
+\section{Question 1}\label{question-1}}
+
+\hypertarget{a}{%
+\subsection{(a)}\label{a}}
+
+Let \(\boldsymbol{D}\) be a length \(n\) column vector where the
+\(i\)'th element is one, \(1\leq i \leq n\), but other elements are
+zeros. Suppose the OLS regression equation is given as
+\[\boldsymbol{y} = \boldsymbol{X}\boldsymbol{b} + \boldsymbol{D}d + \boldsymbol{r},\]
+where \(\boldsymbol{X}\) is an \(n \times k\) matrix,
+\(\boldsymbol{y}\), \(\boldsymbol{b}\) and \(\boldsymbol{r}\) are length
+\(n\) column vectors, and \(d\) is a scalar parameter.
+
+By the Frisch-Waugh-Lovell Theorem, the OLS regression coefficient \(d\)
+is
+
+\[d = (\boldsymbol{D}'\boldsymbol{R}_X\boldsymbol{D})^{-1}\boldsymbol{D}'\boldsymbol{R}_X\boldsymbol{y},\]
+
+where
+\(\boldsymbol{R}_X = \boldsymbol{I}_T-\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}\).
+
+It can then be expressed as \begin{align*}
+d &= (\boldsymbol{D}'(\boldsymbol{I}_T-\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X})\boldsymbol{D})^{-1}\boldsymbol{D}'\boldsymbol{R}_X\boldsymbol{y} \\
+&= (\boldsymbol{D}'\boldsymbol{D}-\boldsymbol{D}'\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}\boldsymbol{D})^{-1}\boldsymbol{D}'\boldsymbol{R}_X\boldsymbol{y} \\
+&= (\boldsymbol{D}'\boldsymbol{D}-\boldsymbol{D}'\boldsymbol{H}_X\boldsymbol{D})^{-1}\boldsymbol{D}'\boldsymbol{R}_X\boldsymbol{y} \\
+&= (1-h_{ii})^{-1}\boldsymbol{D}'\boldsymbol{R}_X\boldsymbol{y} \\
+&= (1-h_{ii})^{-1}\boldsymbol{D}'(\boldsymbol{I}_T -\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X})\boldsymbol{y} \\
+&= (1-h_{ii})^{-1}\boldsymbol{D}'(\boldsymbol{y} -\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}\boldsymbol{y}) \\
+&= (1-h_{ii})^{-1}\boldsymbol{D}'\boldsymbol{e}\\
+&= (1-h_{ii})^{-1}e_i,\\
+\end{align*} where \(h_{ii}\) is the \(i\)'th diagonal element of
+\(\boldsymbol{H}_X = \boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}\),
+and \(e_i\) is the \(i\)'th residual from the OLS regression of
+\(\boldsymbol{y}\) on \(\boldsymbol{X}\).
+
+\hypertarget{b}{%
+\subsection{(b)}\label{b}}
+
+Let \(\boldsymbol{e}\) be the residual from the OLS regression of
+\(\boldsymbol{y}\) on \(\boldsymbol{X}\), and \(\boldsymbol{r}\) be the
+residual from the OLS regression of \(\boldsymbol{y}\) on
+\(\boldsymbol{X}\) and \(\boldsymbol{D}\).
+
+By the Frisch-Waugh-Lovell Theorem,
+\[\boldsymbol{r} = \boldsymbol{R}_X(\boldsymbol{y}-\boldsymbol{D}d),\]
+where
+\(\boldsymbol{R}_X = \boldsymbol{I}_T-\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}\).
+
+Then the residual sum of square for the second regression is
+\begin{align*}
+\boldsymbol{r}'\boldsymbol{r} &= (\boldsymbol{R}_X(\boldsymbol{y}-\boldsymbol{D}d))'(\boldsymbol{R}_X(\boldsymbol{y}-\boldsymbol{D}d)) \\
+&= (\boldsymbol{R}_X\boldsymbol{y}-\boldsymbol{R}_X\boldsymbol{D}d)'(\boldsymbol{R}_X\boldsymbol{y}-\boldsymbol{R}_X\boldsymbol{D}d) \\
+&= (\boldsymbol{e}-\boldsymbol{R}_X\boldsymbol{D}d)'(\boldsymbol{e}-\boldsymbol{R}_X\boldsymbol{D}d) \\
+&= \boldsymbol{e}'\boldsymbol{e}-2\boldsymbol{e}'\boldsymbol{R}_X\boldsymbol{D}d+(\boldsymbol{R}_X\boldsymbol{D}d)'(\boldsymbol{R}_X\boldsymbol{D}d) \\
+&= \boldsymbol{e}'\boldsymbol{e}-2\boldsymbol{e}'(\boldsymbol{I}_T-\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X})\boldsymbol{D}d+(\boldsymbol{R}_X\boldsymbol{D}d)'(\boldsymbol{R}_X\boldsymbol{D}d) \\
+&= \boldsymbol{e}'\boldsymbol{e}-2(\boldsymbol{e}'-\boldsymbol{0})\boldsymbol{D}d+(\boldsymbol{R}_X\boldsymbol{D}d)'(\boldsymbol{R}_X\boldsymbol{D}d) \\
+&= \boldsymbol{e}'\boldsymbol{e}-2\boldsymbol{e}'\boldsymbol{D}d+(\boldsymbol{R}_X\boldsymbol{D}d)'(\boldsymbol{R}_X\boldsymbol{D}d) \\
+&= \boldsymbol{e}'\boldsymbol{e}-2e_id+(\boldsymbol{R}_X\boldsymbol{D}d)'(\boldsymbol{R}_X\boldsymbol{D}d) \\
+&= \boldsymbol{e}'\boldsymbol{e}-2e_id+d^2\boldsymbol{D}'\boldsymbol{R}_X'\boldsymbol{R}_X\boldsymbol{D} \\
+&= \boldsymbol{e}'\boldsymbol{e}-2e_id+d^2\boldsymbol{D}'\boldsymbol{R}_X\boldsymbol{D} \\
+&= \boldsymbol{e}'\boldsymbol{e}-2e_id+d^2\boldsymbol{D}'(\boldsymbol{I}_T-\boldsymbol{H}_X)\boldsymbol{D} \\
+&= \boldsymbol{e}'\boldsymbol{e}-2e_id+d^2(1-h_{ii}) \\
+&= \boldsymbol{e}'\boldsymbol{e}-2e_i\frac{e_i}{1-h_{ii}}+\frac{e_i^2}{(1-h_{ii})^2}(1-h_{ii}) \\
+&= \boldsymbol{e}'\boldsymbol{e}-2\frac{e_i^2}{1-h_{ii}}+\frac{e_i^2}{(1-h_{ii})} \\
+&= \boldsymbol{e}'\boldsymbol{e}-\frac{e_i^2}{1-h_{ii}}. \\
+\end{align*}
+
+Hence,
+\[\boldsymbol{e}'\boldsymbol{e} = \boldsymbol{r}'\boldsymbol{r} + \frac{e_i^2}{1-h_{ii}}. \]
+
+\hypertarget{c}{%
+\subsection{(c)}\label{c}}
+
+By the Frisch-Waugh-Lovell Theorem, the regression coefficient
+\(\boldsymbol{b}\) from the OLS regression of \(\boldsymbol{y}\) on
+\(\boldsymbol{X}\) and \(\boldsymbol{D}\) is
+\[\boldsymbol{b} = (\boldsymbol{X}'\boldsymbol{R}_D\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{R}_D\boldsymbol{y},\]
+where
+\(\boldsymbol{R}_D = \boldsymbol{I}_T - \boldsymbol{D}(\boldsymbol{D}'\boldsymbol{D})^{-1}\boldsymbol{D}'\).
+
+Given
+\(\boldsymbol{R}_D = \boldsymbol{R}_D'=\boldsymbol{R}_D'\boldsymbol{R}_D = \boldsymbol{R}_D\boldsymbol{R}_D'\).
+Then \(\boldsymbol{b}\) can be expressed as
+\[\boldsymbol{b} = (\boldsymbol{X}'\boldsymbol{R}_D'\boldsymbol{R}_D\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{R}_D'\boldsymbol{R}_D\boldsymbol{y}.\]
+
+Using the fact that
+\(\boldsymbol{R}_D = \boldsymbol{I}_T - \boldsymbol{D}(\boldsymbol{D}'\boldsymbol{D})^{-1}\boldsymbol{D}' = \boldsymbol{I}_T - \boldsymbol{D}\boldsymbol{D}'\),
+which equals a matrix with ones on the leading diagonal, apart from the
+\(i\)'th location which is zero, and is zero everywhere else.
+
+Thus, \(\boldsymbol{R}_D\boldsymbol{X} = \boldsymbol{X}_{(i)}\), which
+is \(\boldsymbol{X}\) with data in \(i\)'th row replaced by zeros.
+Similarly, \(\boldsymbol{R}_D\boldsymbol{y} = \boldsymbol{y}_{(i)}\),
+which is \(\boldsymbol{y}\) with \(i\)'th value replaced by zero.
+
+It follows that \(\boldsymbol{b}\) is the regression coefficient
+obtained from the regression of \(\boldsymbol{y}_{(i)}\) on
+\(\boldsymbol{X}_{(i)}\), because
+\[\boldsymbol{b} = (\boldsymbol{X}'\boldsymbol{R}_D'\boldsymbol{R}_D\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{R}_D'\boldsymbol{R}_D\boldsymbol{y} = (\boldsymbol{X}_{(i)}'\boldsymbol{X}_{(i)})^{-1}\boldsymbol{X}_{(i)}'\boldsymbol{y}_{(i)}.\]
+
+Again, by the Frisch-Waugh-Lovell Theorem, we have
+\[\boldsymbol{r} = \boldsymbol{R}_D(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{b}) = \boldsymbol{y}_{(i)}-\boldsymbol{X}_{(i)}\boldsymbol{b}.\]
+Thus, \(\boldsymbol{r}\) is the residual obtained from the regression of
+\(\boldsymbol{y}_{(i)}\) on \(\boldsymbol{X}_{(i)}\). And hence, using
+the result from (2),
+\(\boldsymbol{r}'\boldsymbol{r} = \boldsymbol{e}'\boldsymbol{e}-e_i^2(1-h_{ii})^{-1}\)
+is the residual sum of square of this regression.
+
+\hypertarget{d}{%
+\subsection{(d)}\label{d}}
+
+Cook and Weisberg (1982) show that the externally studentized residual
+can be defined by
+
+\[t_i = \frac{e_i}{\hat{\sigma}_{(i)}\sqrt{(1-h_{ii})}},\] where \(e_i\)
+is the residual from the OLS regression of \(\boldsymbol{Y}\) on
+\(\boldsymbol{X}\), \(\hat{\sigma}_{(i)}\) is the estimated standard
+deviation of the regression computed without \(i\)'th case, and
+\(h_{ii}\) is the leverage of the \(i\)'th observation.
+
+Using the result from (b) and (c), \(\hat{\sigma}_{(i)}\) can be
+expressed as
+\[\hat{\sigma}_{(i)} = \sqrt{\hat{\sigma}_{(i)}^2} = \sqrt{\boldsymbol{r}'\boldsymbol{r}/(n-k-1)} = \sqrt{[\boldsymbol{e}'\boldsymbol{e} - e_i^2/(1-h_{ii})]/(n-k-1)}.\]
+
+Under normality, the distribution of \(t_i\) is Student's t with
+\(n-k-1\) degree of freedom. Hence, we can construct a test based on the
+externally studentized residual. We will reject the null hypothesis that
+the errors are independent and normally distributed with expected value
+\(0\) and variance \(\sigma^2\) when \[|t_i| > t_{1-\alpha/2}(n-k-1),\]
+where \(t_{1-\alpha/2}(n-k-1)\) is the \(1-\alpha/2\) quantile point of
+the Student's t distribution with \(n-k-1\) degree of freedom. If we
+reject the null hypothesis for the \(i\)'th observation, then we may
+consider it as an ``outlier.''
+
+\hypertarget{question-2}{%
+\section{Question 2}\label{question-2}}
+
+\hypertarget{a-1}{%
+\subsection{(a)}\label{a-1}}
+
+The MLE of \(\beta\) subject to the \(J\) linear constraints
+\(\boldsymbol{L}\boldsymbol{\beta} = \boldsymbol{r}\) can be obtained by
+maximizing the Lagrangian
+\[\mathcal{L} = logL(\boldsymbol{\theta}) - \boldsymbol{\lambda}'h(\boldsymbol{\theta}) = -\frac{n}{2}log(2\pi\sigma^2)-\frac{(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})'(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})}{2\sigma^2}-\boldsymbol{\lambda}'(\boldsymbol{L}\boldsymbol{\beta}-\boldsymbol{r}).\]
+
+By solving the first order condition of the Lagrangian,
+\[\frac{\partial \mathcal{L}}{\partial \boldsymbol{\beta}} = \frac{\boldsymbol{X}'\boldsymbol{y}-\boldsymbol{X}'\boldsymbol{X}\boldsymbol{\beta}}{\sigma^2}-\boldsymbol{L}'\boldsymbol{\lambda} = \boldsymbol{0},\]
+
+\[\frac{\partial \mathcal{L}}{\partial \sigma^2} = -\frac{n}{2\sigma^2}+\frac{(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})'(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})}{2\sigma^4} = \boldsymbol{0}, \text{and}\]
+
+\[\frac{\partial \mathcal{L}}{\partial \boldsymbol{\lambda}} = \boldsymbol{L}\boldsymbol{\beta} - \boldsymbol{r} = \boldsymbol{0},\]
+
+we have a system of equations:
+
+\begin{numcases}{}
+\hat{\boldsymbol{b}} = (\boldsymbol{X}'\boldsymbol{X})^{-1}(\boldsymbol{X}'\boldsymbol{y}-\hat{\sigma}^2\boldsymbol{L}'\boldsymbol{\lambda}) \label{eq1} \\
+\hat{\sigma}^2 = (\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{b}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{b}})/n \label{eq2} \\
+\boldsymbol{L}\hat{\boldsymbol{b}} = \boldsymbol{r} \label{eq3}
+\end{numcases}
+
+.
+
+Substitute (\ref{eq3}) with (\ref{eq1}), we then have
+\begin{equation}\label{eq4}
+\hat{\boldsymbol{\lambda}} = (\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{y}-\boldsymbol{r})\hat{\sigma}^{-2}.\end{equation}
+
+Substitute (\ref{eq1}) with (\ref{eq4}), we obtain the closed form
+solution of \(\hat{\boldsymbol{b}}\),
+
+\begin{align*}
+\hat{\boldsymbol{b}} &= (\boldsymbol{X}'\boldsymbol{X})^{-1}(\boldsymbol{X}'\boldsymbol{y}-\hat{\sigma}^2\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{y}-\boldsymbol{r})\hat{\sigma}^{-2}) \\
+&= (\boldsymbol{X}'\boldsymbol{X})^{-1}(\boldsymbol{X}'\boldsymbol{y}-\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{y}-\boldsymbol{r})) \\
+&= \boldsymbol{b}-(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{y}-\boldsymbol{r}) \\
+&= \boldsymbol{b}-(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{L}\boldsymbol{b}-\boldsymbol{r}) \\
+&= \boldsymbol{b}+(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b}),
+\end{align*}
+
+where
+\(\boldsymbol{b} = (\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{y}\).
+
+\hypertarget{b-1}{%
+\subsection{(b)}\label{b-1}}
+
+By definition
+
+\begin{align*}
+\hat{\boldsymbol{e}} &= \boldsymbol{y} - \boldsymbol{X}\hat{\boldsymbol{b}} \\
+&= \boldsymbol{y} - \boldsymbol{X}\hat{\boldsymbol{b}} - \boldsymbol{X}(\hat{\boldsymbol{b}} - \boldsymbol{b}) \\
+&= \boldsymbol{e} - \boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b}).
+\end{align*}
+
+Thus
+
+\begin{align*}
+\hat{\boldsymbol{e}}'\hat{\boldsymbol{e}} &= \boldsymbol{e}'\boldsymbol{e} + (\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b})'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b}) \\ 
+&=  \boldsymbol{e}'\boldsymbol{e} + (\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b})'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b}) \\
+&= \boldsymbol{e}'\boldsymbol{e} + (\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b})'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b}),
+\end{align*}
+
+because \(\boldsymbol{X}'\boldsymbol{e} = \boldsymbol{0}\).
+
+\hypertarget{c-1}{%
+\subsection{(c)}\label{c-1}}
+
+Given the unrestricted estimator for \(\boldsymbol{\beta}\) is the same
+in MLE and OLS, which will be denoted as \(\boldsymbol{b}\), but the
+unrestricted estimator for \(\sigma^2\) in MLE is
+\(\hat{\sigma}^2 = (\boldsymbol{y}-\boldsymbol{X}\boldsymbol{b})'(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{b})n^{-1}\).
+The Likelihood Ratio test of the null hypothesis
+\(H_0: \boldsymbol{L}\boldsymbol{\beta} = \boldsymbol{r}\) is
+
+\begin{align*}
+TLR_n &= 2[logL(\boldsymbol{\theta}_U) - logL(\boldsymbol{\theta}_R)] \\
+&= 2[-\frac{n}{2}log(2\pi\hat{\sigma}^2_U)-\frac{(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{b})'(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{b})}{2\hat{\sigma}^2_U}+\frac{n}{2}log(2\pi\hat{\sigma}^2_R)+\frac{(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{b}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{b}})}{2\hat{\sigma}^2_R}] \\
+&= -nlog(\hat{\sigma}^2_U)-\frac{(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{b})'(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{b})}{\hat{\sigma}^2_U}+nlog(\hat{\sigma}^2_R)+\frac{(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{b}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{b}})}{\hat{\sigma}^2_R} \\
+&= -nlog(\hat{\sigma}^2_U)-n+nlog(\hat{\sigma}^2_R)+n \\
+&= nlog(\hat{\sigma}^2_R/\hat{\sigma}^2_U) \\
+&= nlog(\frac{\boldsymbol{e}_R'\boldsymbol{e}_R}{\boldsymbol{e}_U'\boldsymbol{e}_U})\\
+&= nlog(\frac{\boldsymbol{e}_U'\boldsymbol{e}_U + (\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b})'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b})}{\boldsymbol{e}_U'\boldsymbol{e}_U})\\
+&= nlog(1 +\frac{(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b})'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b})}{\boldsymbol{e}_U'\boldsymbol{e}_U}).\\
+\end{align*}
+
+Given the F test statistic is
+\[TF_n =  \frac{(n-k)(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b})'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b})}{\boldsymbol{e}_U'\boldsymbol{e}_UJ},\]
+where \(J\) is the number of restriction.
+
+Then, the LR test statistic is a monotonic transformation of the F test
+statistic
+
+\[TLR_n = nlog(1 +\frac{(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b})'(\boldsymbol{L}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{L}')^{-1}(\boldsymbol{r}-\boldsymbol{L}\boldsymbol{b})}{\boldsymbol{e}_U'\boldsymbol{e}_U}) = nlog(1+\frac{J}{n-k}TF_n).\]
+Hence, the LR test and the F test are equivalent.
+
+\hypertarget{question-3}{%
+\section{Question 3}\label{question-3}}
+
+The RESET test aims to test if there exists non linearity in the linear
+model
+\[\boldsymbol{y}=\boldsymbol{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}\]
+by testing \(H_0: \boldsymbol{\gamma} = \boldsymbol{0}\) in a proposed
+model
+\[\boldsymbol{y}=\boldsymbol{X}\boldsymbol{\beta}+\boldsymbol{Z}\boldsymbol{\gamma}+\boldsymbol{\varepsilon}\]
+using a standard F test, where \(\boldsymbol{Z}\) is a collection of
+higher order terms of the predicted values.
+
+In this question, we includes the squares and cubes of the predicted
+values to test two models. The first one is a regular regression model
+with the house price being the response and \(4\) other variables being
+the explanatory variables. The second one uses the same setting except
+log transformation is applied on all variables. We then obtain the test
+statistic for these two models, which are 4.67 and 2.56. Given the
+number of observations is \(88\) and the number of additional variables
+in the unrestricted model is \(2\), the degrees of freedom of the null
+distribution are \(2\) and \(88-5-2=81\). By using the cdf calculator in
+\texttt{R}, we obtain the corresponding p-value, which are \(0.0120365\)
+and \(0.0835469\).
+
+With \(5\)\% significance level, we reject the null hypothesis for the
+first one but do not reject for the second one. This means the first
+model could potentially omits some higher order terms or interaction
+terms. The indication of this is the assumptions of the regression model
+may no longer hold, and we may observe endogeneity. The second model
+tries to use the log-log form to capture the non linearity, and the test
+does not suggest any potential issue. Thus, we will choose the log-log
+form as our preferred model.
+
+\hypertarget{question-4}{%
+\section{Question 4}\label{question-4}}
+
+\hypertarget{section}{%
+\subsection{(1)}\label{section}}
+
+Given \(a_1\), \(a_2\), \(a_3\) and \(a_4\) are constants,
+\(E[N_i] = n(\theta^{i-1}-\theta^{i}\mathbbm{1}(i \neq 4))\) for
+\(i = 1,..,4\), and \(E[T] = \theta\). We have
+\[E[T] = E[a_1N1+a_2N_2+a_3N_3+a_4N_4] =n[a_1(1-\theta)+a_2(\theta-\theta^2)+a_3(\theta^2-\theta^3)+a_4\theta^3] =\theta.\]
+Since \(T\) is a statistic, \(a_1\), \(a_2\), \(a_3\) and \(a_4\) do not
+depend on \(\theta\). Hence, \(a_1 = 0\), \(a_2 = a_3 = a_4 = N^{-1}\).
+
+\hypertarget{section-1}{%
+\subsection{(2)}\label{section-1}}
+
+Because \(N = N_1 + N_2 + N3 + N_4\), the estimator \(T\) can be
+expressed by
+\[T = a_1N1+a_2N_2+a_3N_3+a_4N_4 = (N_2+N_3+N_4)N^{-1} = (N-N_1)N^{-1}=1-N_1/N.\]
+
+Given \(V[N_i] = Np_i(1-p_i)\) and
+\(p_i = \theta^{i-1}-\theta^{i}\mathbbm{1}(i \neq 4)\) for
+\(i = 1,..,4\). The variance of \(T\) is
+\[V[T] = V[1-N_1/N] = N^{-2}V[N_1] = N^{-2}Np_1(1-p_1) = \theta(1-\theta)N^{-1}.\]
+
+\hypertarget{section-2}{%
+\subsection{(3)}\label{section-2}}
+
+The pmf of \(X\) is given by
+\[f(x|\theta) = (1-\theta)^{\mathbbm{1}(x = 1)}(\theta-\theta^2)^{\mathbbm{1}(x = 2)}(\theta^2-\theta^3)^{\mathbbm{1}(x = 3)}(\theta^3)^{\mathbbm{1}(x = 4)},\]
+for \(x \in \{1,2,3,4\}\) and \(0\leq\theta\leq0\).
+
+The support function is
+
+\begin{align*}
+logL(\theta|x_1,...x_N) &= logZ(x_1,..x_N)+logf(x_1,..x_N|\theta) \\
+&= logZ(x_1,..,x_N)+\sum_{i=1}^{N}\mathbbm{1}(x = 1)log(1-\theta)+\mathbbm{1}(x = 2)log(\theta-\theta^2)+\mathbbm{1}(x = 3)log(\theta^2-\theta^3)+\mathbbm{1}(x = 4)log(\theta^3)\\
+&= logZ(x_1,..,x_N)+N_1log(1-\theta)+N_2log(\theta-\theta^2)+N_3log(\theta^2-\theta^3)+N_4log(\theta^3).
+\end{align*}
+
+The score function is
+
+\begin{align*}
+\frac{dlogL(\theta|x_1,.,x_N)}{d\theta} &= \frac{-N_1}{(1-\theta)}+\frac{(1-2\theta)N_2}{(\theta-\theta^2)}+\frac{(2\theta-3\theta^2)N_3}{(\theta^2-\theta^3)}+\frac{(3\theta^2)N_4}{\theta^3}.\\
+\end{align*}
+
+By setting the score function equals to zero, we have
+\[\frac{-\hat{\theta}^2N_1+\theta(1-2\hat{\theta})N_2+(2\hat{\theta}-3\hat{\theta}^2)N_3+3(\hat{\theta}-\hat{\theta}^2)N_4}{(\hat{\theta}^2-\hat{\theta}^3)}=0.\]
+
+Thus, the MLE estimator is
+\[\hat{\theta} = \frac{N_2+2N_3+3N_4}{N_1+2N_2+3N_3+3N_4}.\]
+
+The second order derivative of the support function is
+
+\[\frac{d^2logL(\theta|x_1,..,x_N)}{d\theta^2} = \frac{-N_1}{(1-\theta)^2}-\frac{(1-2\theta)^2N_2}{(\theta-\theta^2)^2}-\frac{(2\theta-3\theta^2)^2N_3}{(\theta^2-\theta^3)^2}-\frac{(3\theta^2)^2N_4}{(\theta^3)^2}<0,\]
+because \(N_1\), \(N_2\), \(N_3\) and \(N_4\) are non-negative. Hence,
+it is a maximum.
+
+\hypertarget{section-3}{%
+\subsection{(4)}\label{section-3}}
+
+The Fisher's information per observation is \begin{align*}
+i(\theta_0) &= \left.-E\left[\frac{dlogL(\theta|x)}{d\theta^2}\right]\right|_{\theta = \theta_0} \\
+&= \left.-E\left[\frac{-\mathbbm{1}(x = 1)}{(1-\theta)^2}-\frac{(1-2\theta)^2\mathbbm{1}(x = 2)}{(\theta-\theta^2)^2}-\frac{(2\theta-3\theta^2)^2\mathbbm{1}(x = 3)}{(\theta^2-\theta^3)^2}-\frac{(3\theta^2)^2\mathbbm{1}(x = 4)}{(\theta^3)^2}\right]\right|_{\theta = \theta_0} \\
+&= \left.-\left[\frac{-p_1}{(1-\theta)^2}-\frac{(1-2\theta)^2p_2}{(\theta-\theta^2)^2}-\frac{(2\theta-3\theta^2)^2p_3}{(\theta^2-\theta^3)^2}-\frac{(3\theta^2)^2p_4}{(\theta^3)^2}\right]\right|_{\theta = \theta_0} \\
+&= \left.-\left[\frac{-1}{(1-\theta)}-\frac{(1-2\theta)^2}{(\theta-\theta^2)}-\frac{(2\theta-3\theta^2)^2}{(\theta^2-\theta^3)}-\frac{(3\theta^2)^2}{(\theta^3)}\right]\right|_{\theta = \theta_0} \\
+&= \left.-\left[\frac{-1}{(1-\theta)}-\frac{(1-2\theta)^2}{\theta(1-\theta)}-\frac{(2-3\theta)^2}{(1-\theta)}-\frac{(3\theta^2)^2}{(\theta^3)}\right]\right|_{\theta = \theta_0} \\
+&= \left.-\left[\frac{-\theta}{\theta(1-\theta)}-\frac{(1-2\theta)^2}{\theta(1-\theta)}-\frac{\theta(2-3\theta)^2}{\theta(1-\theta)}-\frac{9\theta^2(1-\theta)}{\theta(1-\theta)}\right]\right|_{\theta = \theta_0} \\
+&= \left.-\left[\frac{-\theta-1-\theta^2}{\theta(1-\theta)}\right]\right|_{\theta = \theta_0} \\
+&= \frac{\theta_0+1+\theta_0^2}{\theta_0(1-\theta_0)}. \\
+\end{align*}
+
+Thus, the CRLB for an ubiased estimator \(T\) is
+\[V[T] \geq \frac{(\phi'(\theta_0))^2}{Ni(\theta_0)} = \frac{1}{Ni(\theta_0)}=\frac{\theta_0(1-\theta_0)}{N(\theta_0+1+\theta_0^2)}.\]
+
+Since the MLE will achieve the CRLB asymptotically, we know for large
+\(n\), the approximate variance of MLE is
+\(V[\hat{\theta}] = \theta_0(1-\theta_0)[n(\theta_0+1+\theta_0^2)]^{-1}\).
+Hence, the asymptotic efficiency of \(T\) relative to \(\hat{\theta}\)
+is
+\[\frac{e(T)}{e(\hat{\theta})} = \frac{\frac{[\phi'(\theta_0)]^2}{Ni(\theta_0)}\frac{1}{V[T]}}{\frac{[\phi'(\theta_0)]^2}{Ni(\theta_0)}\frac{1}{V[\hat{\theta}]}} = \frac{V[\hat{\theta}]}{V[T]} = \frac{\frac{\theta_0(1-\theta_0)}{N(\theta_0+1+\theta_0^2)}}{\frac{\theta_0(1-\theta_0)}{N}}=(\theta_0+1+\theta_0^2)^{-1}.\]
+
+\clearpage
+
+\hypertarget{reference}{%
+\section*{Reference}\label{reference}}
+\addcontentsline{toc}{section}{Reference}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\hypertarget{ref-cook1982residuals}{}%
+Cook, R Dennis, and Sanford Weisberg. 1982. \emph{Residuals and
+Influence in Regression}. New York: Chapman; Hall.
+
+\end{CSLReferences}
+
+\end{document}

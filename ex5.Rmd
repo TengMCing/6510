@@ -15,8 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## (1)
 
-The support is 
-$$
+The support is $$
 \begin{align}
 logL(\boldsymbol{\theta}:\boldsymbol{y}) &= logZ(\boldsymbol{y}) + logf(\boldsymbol{y}:\boldsymbol{\theta}) \\
 &= logZ(\boldsymbol{y}) + log\prod_{i=1}^{n}f(y_i:\boldsymbol{\theta})\\
@@ -25,7 +24,7 @@ logL(\boldsymbol{\theta}:\boldsymbol{y}) &= logZ(\boldsymbol{y}) + logf(\boldsym
 \end{align}
 $$
 
-The score function is 
+The score function is
 
 $$
 \begin{align*}
@@ -33,7 +32,7 @@ $$
 \end{align*}
 $$
 
-The Hessian is 
+The Hessian is
 
 $$
 \begin{align*}
@@ -41,8 +40,7 @@ $$
 \end{align*}
 $$
 
-The information matrix is 
-$$
+The information matrix is $$
 \begin{align*}
 I(\boldsymbol{\theta}) &= -E\left[\frac{\partial^2 logL(\boldsymbol{\theta}:\boldsymbol{y})}{\partial\boldsymbol{\theta}\partial\boldsymbol{\theta}'}\right]\\
 &= -E\begin{bmatrix}\sum_{i=1}^{n} -\frac{1}{\sigma^2} &  \sum_{i=1}^{n} \frac{\mu-y_i}{\sigma^4} \\ \sum_{i=1}^{n} \frac{\mu-y_i}{\sigma^4} & \sum_{i=1}^{n} \frac{1}{2\sigma^4} - \frac{(y_i-\mu)^2}{\sigma^6} \end{bmatrix}\\
@@ -58,8 +56,7 @@ $$h(\boldsymbol{\theta}) = (\mu-\mu_0,0\times\sigma^2)' = (0,0)'.$$
 
 $$D(\boldsymbol{\theta}) = \frac{\partial h(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}'}=\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}.$$
 
-The Wald test statistic is
-$$
+The Wald test statistic is $$
 \begin{align*}
 TW_n &= \left.nh(\boldsymbol{\theta})'\left[D(\boldsymbol{\theta})\widehat{i(\boldsymbol{\theta})}^{-1}D(\boldsymbol{\theta})'\right]^{-1}h(\boldsymbol{\theta})\right|_{\boldsymbol{\theta} = \hat{\boldsymbol{\theta}}} \\
 &= n\begin{bmatrix}\hat{\mu}-\mu_0 & 0\end{bmatrix}\left[\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}\begin{bmatrix}\hat{\sigma}^2 & 0 \\ 0 & \hat{\sigma}^4/2\end{bmatrix}\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}\right]^{-1}\begin{bmatrix}\hat{\mu}-\mu_0 \\ 0\end{bmatrix} \\
@@ -71,7 +68,7 @@ $$
 
 Given $\tilde{\mu} = \mu_0$, the restricted MLE $\tilde{\sigma}^2 = \frac{1}{n}\sum_{i=1}^{n}(y_i-\mu_0)^2$.
 
-The LM test statistic is 
+The LM test statistic is
 
 $$
 \begin{align*}
@@ -81,9 +78,7 @@ TS_n &= n^{-1}S(\tilde{\boldsymbol{\theta}})'\widehat{i(\tilde{\boldsymbol{\thet
 &= n^{-1}\begin{bmatrix}\sum_{i=1}^{n} -\mu_0+y_i \\ 0 \end{bmatrix}'\begin{bmatrix}\sum_{i=1}^{n} -\frac{\mu_0-y_i}{\tilde{\sigma}^2} \\ 0 \end{bmatrix}\\
 &= n\frac{(\bar{y}-\mu_0)^2}{\frac{1}{n}\sum_{i=1}^{n}(y_i-\mu_0)^2}. \\
 \end{align*}
-$$
-The likelihood ratio test statistic is
-$$
+$$ The likelihood ratio test statistic is $$
 \begin{align}
 TLR_n &= 2[logL(\hat{\theta}) - logL(\tilde{\theta})]\\
 &= 2\left[\sum_{i=1}^{n}-\frac{1}{2}log(2\pi\hat{\sigma}^2)-\frac{1}{2}\frac{(y_i-\hat{\mu})^2}{\hat{\sigma}^2} - \sum_{i=1}^{n}-\frac{1}{2}log(2\pi\tilde{\sigma}^2)-\frac{1}{2}\frac{(y_i-\tilde{\mu})^2}{\tilde{\sigma}^2}\right]\\
@@ -93,7 +88,6 @@ TLR_n &= 2[logL(\hat{\theta}) - logL(\tilde{\theta})]\\
 &= nlog\left(\frac{\sum_{i=1}^{n}(y_i-\mu_0)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}\right).\\
 \end{align}
 $$
-
 
 ## (3)
 
@@ -135,15 +129,13 @@ where $\boldsymbol{\varepsilon}_1 \sim N(0,\sigma^2)$ and $\boldsymbol{\varepsil
 
 Let $\boldsymbol{y} = \begin{bmatrix}\boldsymbol{y}_1 \\ \boldsymbol{y}_2 \end{bmatrix}$, $\boldsymbol{X} = \begin{bmatrix}\boldsymbol{X}_1 & 0 \\ 0 & \boldsymbol{X}_2 \end{bmatrix}$, and $\boldsymbol{\beta} = \begin{bmatrix}\boldsymbol{\beta}_1 \\ \boldsymbol{\beta}_2 \end{bmatrix}$.
 
-By setting the score function equals to zero, 
+By setting the score function equals to zero,
 
-$$\frac{\partial logL(\boldsymbol{\beta},\sigma^2:\boldsymbol{y})}{\partial\boldsymbol{\beta}} = \frac{\boldsymbol{X}'(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})}{\sigma^2}=0$$
-$$\frac{\partial logL(\boldsymbol{\beta},\sigma^2:\boldsymbol{y})}{\partial\sigma^2} = -\frac{n}{2\sigma^2}+\frac{(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})'(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})}{2\sigma^4}=0$$
+$$\frac{\partial logL(\boldsymbol{\beta},\sigma^2:\boldsymbol{y})}{\partial\boldsymbol{\beta}} = \frac{\boldsymbol{X}'(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})}{\sigma^2}=0$$ $$\frac{\partial logL(\boldsymbol{\beta},\sigma^2:\boldsymbol{y})}{\partial\sigma^2} = -\frac{n}{2\sigma^2}+\frac{(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})'(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})}{2\sigma^4}=0$$
 
-Since $\boldsymbol{X}'\boldsymbol{X}$ is nonsingular. We have $\hat{\boldsymbol{\beta}}=(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{y}$ and $\hat{\sigma^2} = (\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})n^{-1}$.
+Since $\boldsymbol{X}'\boldsymbol{X}$ is nonsingular, we have $\hat{\boldsymbol{\beta}}=(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'\boldsymbol{y}$ and $\hat{\sigma^2} = (\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})n^{-1}$.
 
-The maximum log-likelihood is
-$$
+The maximum log-likelihood is $$
 \begin{align*}
 logL(\boldsymbol{y}:\hat{\boldsymbol{\beta}},\hat{\sigma}|\boldsymbol{X}) &= -\frac{n}{2}log(2\pi\hat{\sigma}^2)-\frac{(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})}{2\hat{\sigma}^2}\\
 &=-\frac{n}{2}log(2\pi \boldsymbol{e}'\boldsymbol{e}n^{-1})-\frac{\boldsymbol{e}'\boldsymbol{e}}{2\boldsymbol{e}'\boldsymbol{e}n^{-1}}\\
@@ -153,8 +145,7 @@ $$
 
 ## (2)
 
-We have derived the solution in (1), though the dimension of $\boldsymbol{\beta}$ is now only $k\times 1$, and the dimension of $\boldsymbol{X}$ is now $n\times k$, the solution is still hold. The log-likelihood is
-$$logL(\boldsymbol{y}:\hat{\boldsymbol{\beta}},\hat{\sigma}|\boldsymbol{X}) = -\frac{n}{2}log(2\pi\hat{\sigma}^2)-\frac{(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})}{2\hat{\sigma}^2} = -\frac{n}{2}log(2\pi\boldsymbol{e}_0'\boldsymbol{e}_0n^{-1})-\frac{\boldsymbol{e}_0'\boldsymbol{e}_0}{2\boldsymbol{e}_0'\boldsymbol{e}_0n^{-1}}=-\frac{n}{2}log(2\pi\boldsymbol{e}_0'\boldsymbol{e}_0n^{-1})-\frac{n}{2}.$$
+We have derived the solution in (1), though the dimension of $\boldsymbol{\beta}$ is now only $k\times 1$, and the dimension of $\boldsymbol{X}$ is now $n\times k$, the solution is still hold. The log-likelihood is $$logL(\boldsymbol{y}:\hat{\boldsymbol{\beta}},\hat{\sigma}|\boldsymbol{X}) = -\frac{n}{2}log(2\pi\hat{\sigma}^2)-\frac{(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})}{2\hat{\sigma}^2} = -\frac{n}{2}log(2\pi\boldsymbol{e}_0'\boldsymbol{e}_0n^{-1})-\frac{\boldsymbol{e}_0'\boldsymbol{e}_0}{2\boldsymbol{e}_0'\boldsymbol{e}_0n^{-1}}=-\frac{n}{2}log(2\pi\boldsymbol{e}_0'\boldsymbol{e}_0n^{-1})-\frac{n}{2}.$$
 
 ## (3)
 
@@ -247,8 +238,7 @@ Let $g = qp + (1-p)(1-q)$, and $1-g = 1- qp - (1-p)(1-q)$.
 
 By solving the first order condition of the log-likelihood, we obtain the MLE of $g$
 
-$$\frac{d logL(g,\boldsymbol{X})}{dg} = \sum_{i=1}^{n}x/g+(1-x)/(1-g)=0$$
-$$\hat{g} = \bar{x}.$$
+$$\frac{d logL(g,\boldsymbol{X})}{dg} = \sum_{i=1}^{n}x/g+(1-x)/(1-g)=0$$ $$\hat{g} = \bar{x}.$$
 
 By the invariance of MLE, since $g = qp + (1-p)(1-q)$ which is a one-to-one mapping, the MLE of $p$ will be $\hat{p} = (\bar{x}+q-1)/(2q-1)$.
 
@@ -256,7 +246,7 @@ By the invariance of MLE, since $g = qp + (1-p)(1-q)$ which is a one-to-one mapp
 
 The mean of $\hat{p}$ is $E[\hat{P}] = E[(\bar{x}+q-1)/(2q-1)] = \frac{qp + (1-p)(1-q) + q - 1}{2q-1} = p$.
 
-The variance of $\hat{p}$ is $V[\hat{P}] = V[(\bar{x}+q-1)/(2q-1)] = V[\bar{x}]/(2q-1)^2 = nV[x]/[(2q-1)n]^2 =  g(1-g)/[n(2q-1)^2]$.
+The variance of $\hat{p}$ is $V[\hat{P}] = V[(\bar{x}+q-1)/(2q-1)] = V[\bar{x}]/(2q-1)^2 = nV[x]/[(2q-1)n]^2 = g(1-g)/[n(2q-1)^2]$.
 
 $V[\hat{P}] = g(1-g)/[n(2q-1)^2] \overset{p}{\rightarrow}0$ as $n \rightarrow \infty$.
 
@@ -286,13 +276,3 @@ q <- 0.25
 ## (6)
 
 If the coin is not biased, the estimator is not well-defined.
-
-
-
-
-
-
-
-
-
-

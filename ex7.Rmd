@@ -1,0 +1,235 @@
+---
+title: "ex7"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1
+
+## (1)
+
+If $a>c$,
+
+$$P(Y\leq a|Y\leq c) = \frac{P(Y\leq a,Y\leq c)}{P(Y \leq c)} = \frac {P(Y\leq c)}{P(Y \leq c)} = 1.$$
+
+If $a\leq c$,
+
+$$P(Y\leq a|Y\leq c) = \frac{P(Y\leq a,Y\leq c)}{P(Y \leq c)} = \frac {P(Y\leq a)}{P(Y \leq c)} = \frac{F(a)}{F(c)}.$$
+
+Differentiate the CDF with respect to $y$, for $y \leq c$, we have
+
+$$f(y|Y\leq c) = \frac{f(y)}{F(c)},$$
+
+and $f(y|Y\leq c) = 0$ for $y > c$.
+
+Let $Z = (Y-\mu)\sigma^{-1}$ be a random variable, $\phi(z)$ is the PDF of $Z$ and $\Phi(z)$ is the CDF of $Z$. By solving $Z = (Y-\mu)\sigma^{-1}$, we have $Y = \sigma Z+\mu$.
+
+Hence, the CDF of $Y$ is 
+
+$$F_Y(y) = P(Y\leq y) = P(\sigma Z+\mu \leq y)=P(Z\leq (y-\mu)\sigma^{-1})=\Phi((y-\mu)\sigma^{-1}).$$
+
+Further the support of $Y$ and $Z$ are $\mathcal{A} = (-\infty,\infty)$ and $\mathcal{B} = (-\infty,\infty)$ respectively. The transformation from $Z$ to $Y$ is one-to-one and onto.
+
+The Jacobian of the transformation is 
+
+$$\boldsymbol{J} = \frac{\partial(z)}{\partial(y)}=|\sigma^{-1}| = \sigma^{-1}.$$
+
+Therefore, the PDF of $Y$ is 
+
+$$f(y) = \sigma^{-1}\phi((y-\mu)\sigma^{-1}).$$
+
+It follows that for $y\leq c$,
+
+$$f(y|Y\leq c) = \frac{f(y)}{F(c)} = \frac{\sigma^{-1}\phi((y-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}.$$
+
+
+## (2)
+
+The conditional mean is
+
+$$
+\begin{align*}
+E[y|Y\leq c] &= \int_{-\infty}^{\infty}yf(y|Y\leq c)dy \\
+&= \int_{-\infty}^{c}y\frac{\sigma^{-1}\phi((y-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}dy\\
+&=\int_{-\infty}^{\sigma^{-1} (c - \mu)}(\sigma z+\mu)\frac{\phi(z)}{\Phi((c-\mu)\sigma^{-1})}dz\\
+&=\mu + \int_{-\infty}^{\sigma^{-1} (c - \mu)}\sigma z\frac{\phi(z)}{\Phi((c-\mu)\sigma^{-1})}dz\\
+&=\mu - \int_{-\infty}^{\sigma^{-1} (c - \mu)}\sigma \frac{\frac{d}{dz}\phi(z)}{\Phi((c-\mu)\sigma^{-1})}dz\\
+&=\mu - \sigma\frac{\phi(\sigma^{-1}(c-\mu))-\phi(-\infty)}{\Phi((c-\mu)\sigma^{-1})}\\
+&=\mu - \sigma\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}.
+\end{align*}
+$$
+
+
+The second moment is
+
+$$
+\begin{align*}
+E[y^2|Y\leq c] &= \int_{-\infty}^{\infty}y^2f(y|Y\leq c)dy \\
+&= \int_{-\infty}^{c}y^2\frac{\sigma^{-1}\phi((y-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}dy\\
+&=\int_{-\infty}^{\sigma^{-1} (c - \mu)}(\sigma z + \mu)^2\frac{\phi(z)}{\Phi((c-\mu)\sigma^{-1})}dz\\
+&=\int_{-\infty}^{\sigma^{-1} (c - \mu)}(\sigma^2z^2+\mu^2+2\sigma z \mu)\frac{\phi(z)}{\Phi((c-\mu)\sigma^{-1})}dz\\
+&=\mu^2 + \int_{-\infty}^{\sigma^{-1} (c - \mu)}(\sigma^2z^2+2\sigma z \mu)\frac{\phi(z)}{\Phi((c-\mu)\sigma^{-1})}dz\\
+&=\mu^2 + 2\mu \left[- \sigma\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\right] + \int_{-\infty}^{\sigma^{-1} (c - \mu)}(\sigma^2z^2)\frac{\phi(z)}{\Phi((c-\mu)\sigma^{-1})}dz\\
+&=\mu^2 + 2\mu \left[- \sigma\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\right] - \frac{\sigma^2}{\Phi((c-\mu)\sigma^{-1})}\int_{-\infty}^{\sigma^{-1} (c - \mu)}z\frac{d\phi(z)}{dz}dz\\
+&=\mu^2 + 2\mu \left[- \sigma\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\right] - \frac{\sigma^2}{\Phi((c-\mu)\sigma^{-1})}\left[z\phi(z)\bigg\rvert_{-\infty}^{\sigma^{-1}(c-\mu)} -\int_{-\infty}^{\sigma^{-1} (c - \mu)}\phi(z)dz\right]\\
+&=\mu^2 + 2\mu \left[- \sigma\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\right] - \frac{\sigma^2}{\Phi((c-\mu)\sigma^{-1})}\left[\sigma^{-1}(c-\mu)\phi(\sigma^{-1}(c-\mu)) -\Phi(\sigma^{-1}(c-\mu))\right]\\
+&=\mu^2 + 2\mu \left[- \sigma\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\right] - \frac{\sigma^2}{\Phi((c-\mu)\sigma^{-1})}\sigma^{-1}(c-\mu)\phi(\sigma^{-1}(c-\mu))+\sigma^2.\\
+\end{align*}
+$$
+The conditional variance is 
+
+$$
+\begin{align*}
+Var[y|Y \leq c] &= E[y^2|Y\leq c]-(E[y|Y \leq c])^2\\
+&= \mu^2 + 2\mu \left[- \sigma\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\right] - \frac{\sigma^2}{\Phi((c-\mu)\sigma^{-1})}\sigma^{-1}(c-\mu)\phi(\sigma^{-1}(c-\mu))+\sigma^2 - \left[\mu - \sigma\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\right]^2\\
+&= \mu^2 + 2\mu \left[- \sigma\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\right] - \frac{\sigma^2}{\Phi((c-\mu)\sigma^{-1})}\sigma^{-1}(c-\mu)\phi(\sigma^{-1}(c-\mu))+\sigma^2 - \mu^2 - \sigma^2\left[\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\right]^2+2\mu\sigma\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\\
+&= - \frac{\sigma^2}{\Phi((c-\mu)\sigma^{-1})}\sigma^{-1}(c-\mu)\phi(\sigma^{-1}(c-\mu))+\sigma^2 - \sigma^2\left[\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\right]^2\\
+&= \sigma^2\left\{- \frac{\sigma^{-1}(c-\mu)\phi(\sigma^{-1}(c-\mu))}{\Phi((c-\mu)\sigma^{-1})}+1 - \left[\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\right]^2\right\}.\\
+\end{align*}
+$$
+
+
+## (3)
+
+When $v\geq0$,
+
+$$\phi(v)+v\Phi(v)>0,$$
+
+and when $v < 0$, the first derivative of the function is
+
+$$\frac{d[\phi(v)+v\Phi(v)]}{dv}=-v\phi(v)+\Phi(v)+v\phi(v)=\Phi(v)>0,$$
+
+which indicates it is a monotonically increasing function.
+
+Further, since 
+
+$$\phi(v)+v\Phi(v) \longrightarrow 0 \quad as ~v\longrightarrow -\infty.$$
+
+Therefore, $\phi(v)+v\Phi(v)>0$ for $v >-\infty$.
+
+Hence, 
+
+$$
+\begin{align*}
+Var[y|Y\leq c]&=\sigma^2\left\{- \frac{\sigma^{-1}(c-\mu)\phi(\sigma^{-1}(c-\mu))}{\Phi((c-\mu)\sigma^{-1})}+1 - \left[\frac{\phi((c-\mu)\sigma^{-1})}{\Phi((c-\mu)\sigma^{-1})}\right]^2\right\} \\
+&= \sigma^2\left\{1- \frac{\sigma^{-1}(c-\mu)\phi(\sigma^{-1}(c-\mu))\Phi((c-\mu)\sigma^{-1}) + \phi((c-\mu)\sigma^{-1})^2}{\Phi((c-\mu)\sigma^{-1})^2}\right\} \\
+&= \sigma^2\left\{1- \frac{\phi(\sigma^{-1}(c-\mu))[\sigma^{-1}(c-\mu)\Phi((c-\mu)\sigma^{-1}) + \phi((c-\mu)\sigma^{-1}])}{\Phi((c-\mu)\sigma^{-1})^2}\right\} \\
+&< \sigma^2.
+\end{align*}
+$$
+
+# Question 2
+
+## (1)
+
+$$
+\begin{align*}
+E[y_i|\boldsymbol{x}_i] &=P(y_i^*\leq 0)\times 0+P(y_i^*>0)E[y_i^*|y_i^*>0]\\
+&=P(y_i^*>0)E[y_i^*|y_i^*>0]\\
+&=\Phi\left(\frac{\boldsymbol{x}_i'\boldsymbol{\beta}}{\sigma}\right)\left(\boldsymbol{x}_i'\boldsymbol{\beta}+\sigma\frac{\phi(\frac{\boldsymbol{x}_i'\boldsymbol{\beta}}{\sigma})}{\Phi(\frac{\boldsymbol{x}_i'\boldsymbol{\beta}}{\sigma})}\right).
+\end{align*}
+$$
+
+## (2)
+
+The criterion function is
+
+$$C_n(\boldsymbol{\beta},\sigma) = \sum_{y_i>0}-\frac{1}{2}[log(2\pi)-log(\sigma^2)+\frac{(y_i-\boldsymbol{x}_i'\boldsymbol{\beta}
+)^2}{\sigma^2}]+\sum_{y_i=0}log[1-\Phi(\frac{\boldsymbol{x}_i'\boldsymbol{\beta}}{\sigma})].$$
+
+Let $\boldsymbol{\delta}=\gamma\boldsymbol{\beta}$ and $\gamma=\sigma^{-1}$. We have
+
+$$C_n(\boldsymbol{\beta},\sigma) = \sum_{y_i>0}-\frac{1}{2}[log(2\pi)-log(\gamma^{-2})+(\gamma y_i-\boldsymbol{x}_i'\boldsymbol{\delta}
+)^2]+\sum_{y_i=0}log[1-\Phi(\boldsymbol{x}_i'\boldsymbol{\delta})].$$
+
+## (3)
+
+The score function is 
+
+$$S_n(\boldsymbol{\beta},\sigma) = \begin{bmatrix}\frac{\partial C_n}{\partial \boldsymbol{\beta}}\\\frac{\partial C_n}{\partial \sigma}\end{bmatrix}=\begin{bmatrix}\frac{\partial C_n}{\partial \boldsymbol{\beta}}\\  \end{bmatrix}$$
+
+## (4)
+
+## (5)
+
+# Question 3
+
+## (1)
+
+$$E[y_i|\boldsymbol{x}_i]=P(y_i=0|\boldsymbol{x}_i)\times0+P(y_i=1|\boldsymbol{x}_i)\times1=P(y_i=1|\boldsymbol{x}_i)=E[\boldsymbol{x}_i'\boldsymbol{\beta}+\varepsilon_i]=\boldsymbol{x}_i'\boldsymbol{\beta}.$$
+
+## (2)
+
+$$Var[\varepsilon_i|\boldsymbol{x}_i]=E[\varepsilon_i^2|\boldsymbol{x}_i]=(1-\boldsymbol{x}_i'\boldsymbol{\beta})^2\boldsymbol{x}_i'\boldsymbol{\beta}+(0-\boldsymbol{x}_i'\boldsymbol{\beta})^2(1-\boldsymbol{x}_i'\boldsymbol{\beta})=\boldsymbol{x}_i'\boldsymbol{\beta}(1-\boldsymbol{x}_i'\boldsymbol{\beta}).$$
+
+It is a function of $\boldsymbol{x}_i$. Hence, it can not be homoscedasticity.
+
+## (3)
+
+The likelihood is
+
+$$L=\prod_{i=1}^{n}P(y_i=1|\boldsymbol{x_i})^{y_i}P(y_i=0|\boldsymbol{x_i})^{(1-y_i)}.$$
+
+The log-likelihood is
+
+$$logL=\sum_{i=1}^{n}y_ilogP(y_i=1|\boldsymbol{x_i})+(1-y_i)logP(y_i=0|\boldsymbol{x_i}).$$
+
+Suppose $P(y_i=1|\boldsymbol{x}_i)=\boldsymbol{x}_i'\boldsymbol{\beta}$. The log-likelihood becomes
+
+$$logL=\sum_{i=1}^{n}y_ilog(\boldsymbol{x}_i'\boldsymbol{\beta})+(1-y_i)log(1-\boldsymbol{x}_i'\boldsymbol{\beta}).$$
+
+## (4)
+
+The score function is
+
+$$\frac{\partial logL}{\partial \beta_0}=\sum_{i=1}^{n}\frac{y_i}{\beta_0}-\frac{1-y_i}{1-\beta_0}.$$
+
+The MLE can be obtained by setting the score function equals to zero,
+
+$$\sum_{i=1}^{n}\frac{y_i}{\beta_0}-\frac{1-y_i}{1-\beta_0}=0$$
+
+$$\hat{\beta}_0=n^{-1}\sum_{i=1}^{n}y_i.$$
+
+Substitute into the log-likelihood function, we have
+
+$$logL=\sum_{i=1}^{n}y_ilog(\bar{y})+(1-y_i)log(1-\bar{y})=n[\bar{y}log(\bar{y})+(1-\bar{y})log(1-\bar{y})].$$
+
+## (5)
+
+The score function is
+
+$$\frac{\partial logL}{\partial \boldsymbol{\beta}}=\begin{bmatrix}\sum_{i=1}^{n}\frac{y_i}{\boldsymbol{x}_i'\boldsymbol{\beta}}-\frac{1-y_i}{1-\boldsymbol{x}_i'\boldsymbol{\beta}}\\\sum_{i=1}^{n}x_{i1}(\frac{y_i}{\boldsymbol{x}_i'\boldsymbol{\beta}}-\frac{1-y_i}{1-\boldsymbol{x}_i'\boldsymbol{\beta}})\\ \vdots \\ \sum_{i=1}^{n}x_{ij}(\frac{y_i}{\boldsymbol{x}_i'\boldsymbol{\beta}}-\frac{1-y_i}{1-\boldsymbol{x}_i'\boldsymbol{\beta}})\end{bmatrix}=\begin{bmatrix}\sum_{i=1}^{n}y_i-\boldsymbol{x}_i'\boldsymbol{\beta}\\\sum_{i=1}^{n}x_{i1}(y_i-\boldsymbol{x}_i'\boldsymbol{\beta})\\ \vdots \\ \sum_{i=1}^{n}x_{ii}(y_i-\boldsymbol{x}_i'\boldsymbol{\beta})\end{bmatrix}.$$
+
+Setting it equal to $\boldsymbol{0}$ it is equivalent to solve
+
+$$\boldsymbol{X}'(\boldsymbol{Y}-\boldsymbol{X}\boldsymbol{\beta})=\boldsymbol{0},$$
+
+which gives us the solution $\hat{\boldsymbol{\beta}}=\boldsymbol{(X'X)^{-1}X'Y}$.
+
+
+# Question 4
+
+
+## (1)
+
+The exp family:
+
+$$f(y|\theta,\phi)=exp[\frac{y\theta-b(\theta)}{a(\phi)}+c(y,\phi)].$$
+
+We recognize that 
+
+$$f_T(t)=\frac{4}{\mu^2}texp(-2t/\mu)=exp(log(\frac{4}{\mu^2}texp(-2t/\mu)))=exp(log(4)-2log(\mu)+log(t)-2t/\mu).$$
+
+Hence $\theta=1/\mu$, $b(\theta)=log(1/\theta)$, $a(\phi)=-1/2$ and $c(y,\phi)=log(4)+log(t)$.
+
+
+The link function
+
+$$g(b'(\theta))=g()$$
