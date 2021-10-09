@@ -4,8 +4,8 @@
 %
 \documentclass[
 ]{article}
-\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
+\usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
@@ -57,7 +57,6 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-\usepackage{cases}
 \usepackage{bbm}
 \ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
@@ -116,7 +115,7 @@ Frisch-Waugh-Lovell Theorem, the OLS estimate of coefficient
 where
 \(\boldsymbol{R_d} = \boldsymbol{I}_{NT} - \boldsymbol{D}(\boldsymbol{D'D})^{-1}\boldsymbol{D}'\).
 
-Since the selection matrix is
+Since the \(NT \times N\) selection matrix is
 \[\boldsymbol{D} = \begin{bmatrix}\boldsymbol{1}_T & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & \boldsymbol{1}_T & \cdots & \boldsymbol{0} \\ \vdots &\ \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{1}_T\end{bmatrix},\]
 
 then
@@ -152,10 +151,38 @@ Because \(\boldsymbol{R_d}\) is a idempotent matrix, which means
 the regression coefficient \(\boldsymbol{b}\) can be expressed as
 
 \[\boldsymbol{b} = (\boldsymbol{X'R_dR_dX})^{-1}\boldsymbol{X'R_dR_dy},\]
-which is the solution by regressing \(\{y_{it}-\bar{y}_i\}\) on
+which is the solution of \(\boldsymbol{\beta}\) by regressing
+\(\{y_{it}-\bar{y}_i\}\) on
 \(\{\boldsymbol{x}_{it}-\bar{\boldsymbol{x}}_i\}\), where
 \(\bar{y}_i = T^{-1}\sum_{i=1}^{T}y_{it}\) and
 \(\bar{\boldsymbol{x}}_{i} = T^{-1}\sum_{i=1}^{T}\boldsymbol{x}_{it}\).
+
+Let \(\boldsymbol{a}\) and \(\boldsymbol{b}\) denote the OLS solution.
+The regression model can be written as
+
+\[\boldsymbol{y} = \boldsymbol{Da}+\boldsymbol{Xb}+\boldsymbol{e},\]
+where \(\boldsymbol{e}\) is the residual.
+
+By applying \(\boldsymbol{D}'\) on both side of the equation, we have
+
+\[\boldsymbol{D}'\boldsymbol{y}=\boldsymbol{D'Da}+\boldsymbol{D'Xb}+\boldsymbol{D'e}.\]
+
+By the Proposition 1.2 from lecture note I,
+\(\boldsymbol{D'e} = \boldsymbol{0}\). And since \(\boldsymbol{D'D}\) is
+a diagonal matrix, it is invertible. Therefore,
+
+\[\boldsymbol{a} = (\boldsymbol{D}'\boldsymbol{D})^{-1}\boldsymbol{D'}(\boldsymbol{y}-\boldsymbol{Xb}).\]
+
+Because
+
+\[ (\boldsymbol{D}'\boldsymbol{D})^{-1}\boldsymbol{D'} = T^{-1} \begin{bmatrix}\boldsymbol{1}_T' & \boldsymbol{0} & \cdots & \boldsymbol{0} \\ \boldsymbol{0} & \boldsymbol{1}_T' & \cdots & \boldsymbol{0} \\ \vdots &\ \vdots & \ddots & \vdots \\ \boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{1}_T'\end{bmatrix}\]
+
+is a mean operator,
+
+\[\boldsymbol{a} = (\boldsymbol{D}'\boldsymbol{D})^{-1}\boldsymbol{D'}(\boldsymbol{y}-\boldsymbol{Xb}) = \begin{bmatrix}\bar{y}_1 \\ \bar{y}_2 \\  \vdots \\ \bar{y}_N \end{bmatrix}-\begin{bmatrix}\bar{\boldsymbol{x}}_1' \\ \bar{\boldsymbol{x}}_2' \\  \vdots \\ \bar{\boldsymbol{x}}_N' \end{bmatrix}\boldsymbol{b},\]
+
+where \(\bar{y}_i = T^{-1}\sum_{t=1}^{T}y_{it}\) and
+\(\bar{\boldsymbol{x}}_i' = T^{-1}\sum_{t=1}^{T}\boldsymbol{x}_{it}'\).
 
 \hypertarget{c}{%
 \subsection{(c)}\label{c}}
@@ -182,7 +209,7 @@ because for \(i \neq j\), \(\boldsymbol{\varepsilon}_i\) and
 \subsection{(d)}\label{d}}
 
 Under the assumptions stated in (a), (b) and (c), there are \(N\)
-regressors in \(\boldsymbol{alpha}\) and \(K\) regressors in
+regressors in \(\boldsymbol{\alpha}\) and \(K\) regressors in
 \(\boldsymbol{X}\). The number of observations is \(NT\). Therefore,
 using the Thereon 1.4 from Lecture note I, we have the unbiased OLS
 estimator of \(\sigma^2\) denoted by \(s^2\)
